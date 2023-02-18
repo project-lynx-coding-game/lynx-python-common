@@ -1,6 +1,6 @@
 from typing import List
 
-from lynx.common.point import Point
+from lynx.common.vector import Vector
 from lynx.common.enums import Direction
 from lynx.common.serializable import Serializable, Properties
 
@@ -15,7 +15,7 @@ class Object(Serializable):
     scene: 'Scene'
     walkable: bool
 
-    def __init__(self, position: Point, scene: 'Scene') -> None:
+    def __init__(self, position: Vector, scene: 'Scene') -> None:
         super().__init__(__class__.__name__)
         self.properties.id = scene.last_object_id  # int
         self.properties.position = position  # Point
@@ -29,12 +29,12 @@ class Object(Serializable):
         # Log creation of the `Object`
         print(self)
 
-    def occupied_fields(self, current_position: Point = None) -> List[Point]:
+    def occupied_fields(self, current_position: Vector = None) -> List[Vector]:
         if not current_position:
             current_position = self.properties.position
         return [current_position]
 
-    def fields_around(self) -> List[Point]:
+    def fields_around(self) -> List[Vector]:
         fields = []
         for field in self.occupied_fields():
             points_around_field = [field + Direction.NORTH.value,

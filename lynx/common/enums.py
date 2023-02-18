@@ -1,5 +1,5 @@
 from enum import Enum
-from lynx.common.point import Point
+from lynx.common.vector import Vector
 
 
 class Direction(Enum):
@@ -7,10 +7,10 @@ class Direction(Enum):
     Enumeration representing global directions
     """
 
-    NORTH = Point(0, 1)
-    EAST = Point(1, 0)
-    SOUTH = Point(0, -1)
-    WEST = Point(-1, 0)
+    NORTH = Vector(0, 1)
+    EAST = Vector(1, 0)
+    SOUTH = Vector(0, -1)
+    WEST = Vector(-1, 0)
 
     def __str__(self) -> str:
         if self == Direction.NORTH:

@@ -1,5 +1,5 @@
 from lynx.common.enums import Direction
-from lynx.common.point import Point
+from lynx.common.vector import Vector
 from lynx.common.actions.action import Action
 from lynx.common.serializable import Properties
 from lynx.common.objects.object import Object
@@ -21,7 +21,7 @@ class Move(Action):
         self.properties.direction = direction
 
     def execute(self) -> None:
-        new_position: Point = self.object.properties.position + self.properties.direction.value
+        new_position: Vector = self.object.properties.position + self.properties.direction.value
 
         if not self.object.scene.move_object(self.object, new_position):
             return
