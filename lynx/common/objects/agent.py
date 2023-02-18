@@ -1,15 +1,15 @@
-from lynx.python.common.exec_interrupt import MapExit
-from lynx.python.common.actions.use import Use
-from lynx.python.common.actions.move import Move
-from lynx.python.common.actions.nearby_objects import NearbyObjects
-# from lynx.python.common.actions.pick_up import PickUp
-from lynx.python.common.actions.wave import Wave
-from lynx.python.common.actions.attacks.slash import Slash
-from lynx.python.common.enums import Direction
-from lynx.python.common.point import Point
-from lynx.python.common.objects.object import Object
-from lynx.python.common.serializable import Properties
-from lynx.python.common.actions.wait_for_code import WaitForCode
+from lynx.common.exec_interrupt import MapExit
+from lynx.common.actions.use import Use
+from lynx.common.actions.move import Move
+from lynx.common.actions.nearby_objects import NearbyObjects
+# from lynx.common.actions.pick_up import PickUp
+from lynx.common.actions.wave import Wave
+from lynx.common.actions.attacks.slash import Slash
+from lynx.common.enums import Direction
+from lynx.common.point import Point
+from lynx.common.objects.object import Object
+from lynx.common.serializable import Properties
+from lynx.common.actions.wait_for_code import WaitForCode
 
 AGENT_HP = 100
 

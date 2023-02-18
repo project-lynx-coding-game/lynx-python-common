@@ -1,12 +1,12 @@
 import random
 
-from lynx.python.common.state_machine import StateMachine
-from lynx.python.common.point import Point
-from lynx.python.common.objects.object import Object
-from lynx.python.common.serializable import Properties
-from lynx.python.common.actions.move import Move
-from lynx.python.common.actions.idle import Idle
-from lynx.python.common.enums import Direction
+from lynx.common.state_machine import StateMachine
+from lynx.common.point import Point
+from lynx.common.objects.object import Object
+from lynx.common.serializable import Properties
+from lynx.common.actions.move import Move
+from lynx.common.actions.idle import Idle
+from lynx.common.enums import Direction
 
 
 class NPC(Object):

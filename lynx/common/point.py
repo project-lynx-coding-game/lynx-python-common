@@ -1,7 +1,7 @@
 import math
+from lynx.common import Serializable
 
-
-class Point:
+class Point(Serializable):
     """
     Class representing 2D point
     """

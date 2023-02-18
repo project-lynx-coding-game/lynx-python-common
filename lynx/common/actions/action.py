@@ -1,4 +1,4 @@
-from lynx.python.common.serializable import Serializable, Properties
+from lynx.common.serializable import Serializable, Properties
 
 
 class Action(Serializable):

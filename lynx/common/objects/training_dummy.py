@@ -1,7 +1,7 @@
-from lynx.python.common.state_machine import StateMachine
-from lynx.python.common.objects.npcs.enemy import Enemy
-from lynx.python.common.point import Point
-from lynx.python.common.serializable import Properties
+from lynx.common.state_machine import StateMachine
+from lynx.common.objects.npcs.enemy import Enemy
+from lynx.common.point import Point
+from lynx.common.serializable import Properties
 
 TRAINING_DUMMY_HP = 100
 

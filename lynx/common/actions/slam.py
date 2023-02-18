@@ -1,11 +1,11 @@
 from typing import List
 
-from lynx.python.common.point import Point
-from lynx.python.common.actions.action import Action
-from lynx.python.common.actions.deal_dmg import DealDmg
-from lynx.python.common.objects.object import Object
-from lynx.python.common.objects.npc import NPC
-from lynx.python.common.objects.agent import Agent
+from lynx.common.point import Point
+from lynx.common.actions.action import Action
+from lynx.common.actions.deal_dmg import DealDmg
+from lynx.common.objects.object import Object
+from lynx.common.objects.npc import NPC
+from lynx.common.objects.agent import Agent
 
 SLAM_DMG = 10
 

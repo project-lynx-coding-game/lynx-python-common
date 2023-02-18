@@ -1,5 +1,5 @@
 from enum import Enum
-from lynx.python.common.point import Point
+from lynx.common.point import Point
 
 
 class Direction(Enum):

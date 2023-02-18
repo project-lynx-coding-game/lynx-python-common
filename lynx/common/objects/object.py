@@ -1,8 +1,8 @@
 from typing import List
 
-from lynx.python.common.point import Point
-from lynx.python.common.enums import Direction
-from lynx.python.common.serializable import Serializable, Properties
+from lynx.common.point import Point
+from lynx.common.enums import Direction
+from lynx.common.serializable import Serializable, Properties
 
 
 class Object(Serializable):

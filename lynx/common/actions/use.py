@@ -1,8 +1,8 @@
-from lynx.python.common.actions.action import Action
-from lynx.python.common.point import Point
-from lynx.python.common.serializable import Properties
-from lynx.python.common.objects.interactive_object import InteractiveObject
-from lynx.python.common.objects.object import Object
+from lynx.common.actions.action import Action
+from lynx.common.point import Point
+from lynx.common.serializable import Properties
+from lynx.common.objects.interactive_object import InteractiveObject
+from lynx.common.objects.object import Object
 
 
 class Use(Action):

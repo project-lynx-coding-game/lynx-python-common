@@ -1,10 +1,10 @@
-from lynx.python.common.enums import Direction
-from lynx.python.common.point import Point
-from lynx.python.common.actions.action import Action
-from lynx.python.common.actions.deal_dmg import DealDmg
-from lynx.python.common.serializable import Properties
-from lynx.python.common.objects.object import Object
-from lynx.python.common.objects.npcs.enemy import Enemy
+from lynx.common.enums import Direction
+from lynx.common.point import Point
+from lynx.common.actions.action import Action
+from lynx.common.actions.deal_dmg import DealDmg
+from lynx.common.serializable import Properties
+from lynx.common.objects.object import Object
+from lynx.common.objects.npcs.enemy import Enemy
 
 SLASH_DMG = 100
 

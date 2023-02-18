@@ -1,8 +1,8 @@
-from lynx.python.common.actions.log import Log
-from lynx.python.common.exec_interrupt import MapExit
-from lynx.python.common.point import Point
-from lynx.python.common.objects.object import Object
-from lynx.python.common.serializable import Properties
+from lynx.common.actions.log import Log
+from lynx.common.exec_interrupt import MapExit
+from lynx.common.point import Point
+from lynx.common.objects.object import Object
+from lynx.common.serializable import Properties
 
 
 class Portal(Object):

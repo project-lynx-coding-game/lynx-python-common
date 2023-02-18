@@ -1,13 +1,13 @@
 from typing import List
 from enum import Enum
 
-from lynx.python.common.state_machine import StateMachine
-from lynx.python.common.enums import Direction
-from lynx.python.common.objects.npcs.enemy import Enemy
-from lynx.python.common.objects.agent import Agent
-from lynx.python.common.point import Point
-from lynx.python.common.actions.prepare_to_slam import PrepareToSlam
-from lynx.python.common.actions.attacks.slam import Slam
+from lynx.common.state_machine import StateMachine
+from lynx.common.enums import Direction
+from lynx.common.objects.npcs.enemy import Enemy
+from lynx.common.objects.agent import Agent
+from lynx.common.point import Point
+from lynx.common.actions.prepare_to_slam import PrepareToSlam
+from lynx.common.actions.attacks.slam import Slam
 
 HP = 400
 

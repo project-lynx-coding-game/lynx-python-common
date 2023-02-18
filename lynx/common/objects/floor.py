@@ -1,6 +1,6 @@
-from lynx.python.common.point import Point
-from lynx.python.common.objects.object import Object
-from lynx.python.common.serializable import Properties
+from lynx.common.point import Point
+from lynx.common.objects.object import Object
+from lynx.common.serializable import Properties
 
 
 class Floor(Object):

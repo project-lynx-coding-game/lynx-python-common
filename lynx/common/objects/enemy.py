@@ -1,7 +1,7 @@
-from lynx.python.common.state_machine import StateMachine
-from lynx.python.common.objects.npc import NPC
-from lynx.python.common.point import Point
-from lynx.python.common.serializable import Properties
+from lynx.common.state_machine import StateMachine
+from lynx.common.objects.npc import NPC
+from lynx.common.point import Point
+from lynx.common.serializable import Properties
 
 
 class Enemy(NPC):
