@@ -10,6 +10,6 @@ class Serializable:
         pass
 
     def __str__(self) -> str:
-        exported_vars = {k: v for k, v in self.__dict__ if not k[0]=='_'}
-        return f"{{ \"type\" : \"{self.__class__.__name__}\", " \
-               f"\"data\" : {json.dumps(exported_vars, default=str)} }} "
+        exported_vars = {k: v for k, v in self.__dict__.items() if not k.startswith("_")}
+        return f"{{\"type\": \"{self.__class__.__name__}\", " \
+               f"\"data\": {json.dumps(exported_vars, default=str)}}}"
