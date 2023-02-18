@@ -1,5 +1,9 @@
 #!/bin/python
 
-import os
+from setuptools import setup
 
-os.system("pip install .")
+setup(
+    name="myapp",
+    version="0.1",
+    packages=["myapp"],
+)
