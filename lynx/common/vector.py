@@ -1,7 +1,7 @@
 import math
 from lynx.common import Serializable
 
-class Point(Serializable):
+class Vector(Serializable):
     """
     Class representing 2D point
     """
@@ -12,21 +12,13 @@ class Point(Serializable):
         self.x = x
         self.y = y
 
-    # xxxXXXxxx WAAAAAAAAAARRRRRNINGGGGGGGG xxxXXXxxx
-    # Position is passed to properties as string,
-    # so frontends MUST parse the string on their own.
-    # It's not another JSON dictionary for reasons.
-    # That is - C# casting magic :)
-    def __str__(self) -> str:
-        return f"({self.x},{self.y})"
-
     # For debugging purposes
     def __repr__(self):
         return str(self)
 
     def __add__(self, other):
         # Point type should be immutable
-        return Point(self.x + other.x, self.y + other.y)
+        return Vector(self.x + other.x, self.y + other.y)
 
     def __hash__(self) -> int:
         return hash((self.x, self.y))
