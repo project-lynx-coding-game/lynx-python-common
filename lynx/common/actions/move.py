@@ -23,7 +23,7 @@ class Move(Action):
     def execute(self) -> None:
         new_position: Vector = self.object.properties.position + self.properties.direction.value
 
-        if not self.object.scene.move_object(self.object, new_position):
+        if not self.object._scene.move_object(self.object, new_position):
             return
 
         # Logging happens before collision detection
@@ -31,4 +31,4 @@ class Move(Action):
         # so we must ensure proper order of logs.
         self.log()
 
-        self.object.scene.check_collisions(self.object)
+        self.object._scene.check_collisions(self.object)

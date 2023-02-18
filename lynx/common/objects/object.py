@@ -12,15 +12,15 @@ class Object(Serializable):
     """
     base: str
     properties: Properties
-    scene: 'Scene'
-    walkable: bool
+    _scene: 'Scene'
+    _walkable: bool
 
     def __init__(self, position: Vector, scene: 'Scene') -> None:
         super().__init__(__class__.__name__)
         self.properties.id = scene.last_object_id  # int
         self.properties.position = position  # Point
-        self.scene = scene
-        self.walkable = False
+        self._scene = scene
+        self._walkable = False
 
         scene.add_object_to_position_map(self, position)
         scene.add_object_to_id_map(self)
