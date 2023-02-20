@@ -18,6 +18,9 @@ class Serializable:
         # so we do not end up with nested strings with complex objects
         return f"{json.dumps(exported_vars, default=lambda x: json.loads(x.serialize()))}"
 
+    # This method is responsible for populating instance of an object
+    # with data from `JSON`. Usually, `self` contains defaultly initialized
+    # instance of the class
     def populate(self, json_string) -> None:
         json_data = json.loads(json_string)
         for exported_var in json_data.keys():
