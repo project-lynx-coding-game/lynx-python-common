@@ -1,14 +1,15 @@
 from dataclasses import dataclass
 import math
-from lynx.common import Serializable
+from lynx.common.serializable import Serializable
+
 
 @dataclass(frozen=True)
 class Vector(Serializable):
     """
     Class representing 2D point
     """
-    x: int
-    y: int
+    x: int = 0
+    y: int = 0
 
     # For debugging purposes
     def __repr__(self):
