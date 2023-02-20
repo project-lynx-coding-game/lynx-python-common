@@ -1,9 +1,8 @@
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 from typing import List
 
 from lynx.common.vector import Vector
-from lynx.common.enums import Direction
-from lynx.common.serializable import Serializable, Properties
+from lynx.common.serializable import Serializable
 
 
 @dataclass
@@ -16,11 +15,8 @@ class Object(Serializable):
     id: int = -1
     name: str = "Object"
     position: Vector = Vector(0, 0)
+    additional_positions: List[Vector] = field(default_factory=list) 
+    state: str = ""
     walkable: bool = False
     tick: str = ""
     on_death: str = ""
-
-    def occupied_fields(self, current_position: Vector = None) -> List[Vector]:
-        if not current_position:
-            current_position = self.properties.position
-        return [current_position]
