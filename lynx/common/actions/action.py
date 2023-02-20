@@ -1,18 +1,14 @@
-from lynx.common.serializable import Serializable, Properties
-
+from lynx.common.serializable import Serializable
+from lynx.common.scene import Scene
 
 class Action(Serializable):
     """
     Represents abstract object responsible for interacting
     with a `scene`.
     """
-    base: str
-    properties: Properties
 
-    def __init__(self) -> None:
-        super().__init__(__class__.__name__)
 
-    def execute(self) -> None:
+    def execute(self, scene: Scene) -> None:
         """
         Method used to change state of a `scene` or `runtime`
         """
