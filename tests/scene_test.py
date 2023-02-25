@@ -1,5 +1,5 @@
 import pytest
-from lynx.common.objects.object import Object
+from lynx.common.object import Object
 from lynx.common.scene import Scene
 from lynx.common.vector import Vector
 

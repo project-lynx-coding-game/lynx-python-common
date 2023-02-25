@@ -1,12 +1,12 @@
 from dataclasses import dataclass, field
 from typing import List
+from lynx.common.enitity import Entity
 
 from lynx.common.vector import Vector
-from lynx.common.serializable import Serializable
 
 
 @dataclass
-class Object(Serializable):
+class Object(Entity):
     """
     Abstract object existing in a `scene`. Represents part of scene's state,
     in contrast to `Action` which represents only modifications of the state.

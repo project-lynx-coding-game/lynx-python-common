@@ -1,42 +1,46 @@
 
 from dataclasses import dataclass
 from typing import List
-from lynx.common.objects.object import *
+from lynx.common.object import *
 from lynx.common.serializable import Serializable
 from lynx.common.vector import Vector
 
+@dataclass
+class _ExportedEntity(Serializable):
+    type: str = ""
+    args: str = ""
+
+# We are using separate class for serialization
+@dataclass
+class _ExportedScene(Serializable):
+    entities: List[_ExportedEntity] = field(default_factory=list) 
 
 @dataclass
 class Scene(Serializable):
-    objects: List[Object] = field(default_factory=list) 
+    _entities: List[Entity] = field(default_factory=list) 
     objects_map: dict[Vector, Object] = field(default_factory=dict) 
 
-    # We are using separate class for serialization
-    @dataclass
-    class _ExportedScene(Serializable):
-        types: List[str] = field(default_factory=list) 
-        objects: List[str] = field(default_factory=list) 
 
     def serialize(self) -> str:
-        types: List[str] = []
-        objects: List[str] = []
-        for object in self.objects:
-            types.append(type(object).name)
-            objects.append(object.serialize())
+        exported_entities: List[_ExportedEntity] = []
+        for entity in self._entities:
+            exported_entity = _ExportedEntity(type=type(entity).name, args=entity.serialize())
+            exported_entities.append(exported_entity)
 
-        exported = self._ExportedScene(types, objects)
+        exported = _ExportedScene(exported_entities)
         return exported.serialize()
 
     def populate(self, json_string) -> None:
-        exported = self._ExportedScene.deserialize(json_string)
+        exported = _ExportedScene.deserialize(json_string)
         
-        for type, object_json in zip(exported.types, exported.objects):
-            object_type = globals()[type]
-            instance = object_type.deserialize(object_json)
-            self.add_object(instance)
+        for exported_entity in exported.entities:
+            object_type = globals()[exported_entity.type]
+            instance = object_type.deserialize(exported_entity.args)
+            if type(instance) is Object:
+                self.add_object(instance)
 
     def add_object(self, object: Object):
-        self.objects.append(object)
+        self._entities.append(object)
         self.objects_map[object.position] = object
 
         

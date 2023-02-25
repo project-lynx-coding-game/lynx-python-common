@@ -1,7 +1,7 @@
-from lynx.common.serializable import Serializable
+from lynx.common.enitity import Entity
 from lynx.common.scene import Scene
 
-class Action(Serializable):
+class Action(Entity):
     """
     Represents abstract object responsible for interacting
     with a `scene`.

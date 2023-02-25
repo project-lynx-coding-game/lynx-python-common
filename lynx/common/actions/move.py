@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 from lynx.common.vector import Vector
 from lynx.common.actions.action import Action
-from lynx.common.objects.object import Object
+from lynx.common.object import Object
 
 @dataclass
 class Move(Action):
