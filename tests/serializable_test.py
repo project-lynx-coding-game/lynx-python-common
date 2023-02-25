@@ -49,12 +49,9 @@ def test_serializable_list():
     list_instance_serialized = list_instance.serialize()
 
     assert list_instance_serialized == '{"list": [{"number": 1}, {"number": 2}, {"number": 3}]}'
-    #list_instance_deserialized = TestListClass.deserialize(list_instance_serialized)
+    list_instance_deserialized = TestListClass.deserialize(list_instance_serialized)
 
-    # TODO: right now, it's not working, because list is just deserialzied as
-    # json, so we get [{},...] instead of [<Object>,...]. My idea is to fetch
-    # type hint from the list and use it for deserialization.
-    #assert list_instance == list_instance_deserialized
+    assert list_instance == list_instance_deserialized
 
 def test_serializable_constructors():
     # TODO: test which would walk over all classes, check if they
