@@ -10,7 +10,7 @@ class Move(Action):
     in case the movement was not possible(destination is not walkable etc).
     """
     object_id: int = -1
-    direction: Vector = Vector(0,0)
+    vector: Vector = Vector(0,0)
 
     def execute(self, scene) -> None:
         # TODO: Right now, actions are not doing anything on the Python side
