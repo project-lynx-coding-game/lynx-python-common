@@ -3,7 +3,7 @@
 from setuptools import setup
 
 setup(
-    name="myapp",
+    name="lynx-python-common",
     version="0.1",
-    packages=["myapp"],
+    packages=["lynx"],
 )

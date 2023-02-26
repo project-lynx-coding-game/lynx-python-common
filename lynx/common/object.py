@@ -20,3 +20,4 @@ class Object(Entity):
     walkable: bool = False
     tick: str = ""
     on_death: str = ""
+    owner: str = ""
