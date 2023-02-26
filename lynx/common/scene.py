@@ -39,8 +39,11 @@ class Scene(Serializable):
             if type(instance) is Object:
                 self.add_object(instance)
 
+    def add_entity(self, entity: Entity):
+        self._entities.append(entity)
+
     def add_object(self, object: Object):
-        self._entities.append(object)
+        self.add_entity(object)
         self.objects_map[object.position] = object
 
         
