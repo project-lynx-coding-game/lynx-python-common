@@ -2,6 +2,9 @@
 from dataclasses import dataclass
 from typing import List
 from lynx.common.object import *
+# TODO: we should make the imports less specific
+#       now, we must add each class here \/
+from lynx.common.actions.move import Move
 from lynx.common.serializable import Serializable
 from lynx.common.vector import Vector
 
@@ -24,7 +27,7 @@ class Scene(Serializable):
     def serialize(self) -> str:
         exported_entities: List[_ExportedEntity] = []
         for entity in self._entities:
-            exported_entity = _ExportedEntity(type=type(entity).name, args=entity.serialize())
+            exported_entity = _ExportedEntity(type=type(entity).__name__, args=entity.serialize())
             exported_entities.append(exported_entity)
 
         exported = _ExportedScene(exported_entities)
@@ -38,6 +41,8 @@ class Scene(Serializable):
             instance = object_type.deserialize(exported_entity.args)
             if type(instance) is Object:
                 self.add_object(instance)
+            else:
+                self.add_entity(instance)
 
     def add_entity(self, entity: Entity):
         self._entities.append(entity)

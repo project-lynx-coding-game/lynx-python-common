@@ -1,5 +1,4 @@
 from lynx.common.enitity import Entity
-from lynx.common.scene import Scene
 
 class Action(Entity):
     """
@@ -8,7 +7,7 @@ class Action(Entity):
     """
 
 
-    def execute(self, scene: Scene) -> None:
+    def execute(self, scene: 'Scene') -> None:
         """
         Method used to change state of a `scene` or `runtime`
         """
