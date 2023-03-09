@@ -1,5 +1,6 @@
+from __future__ import annotations
+from typing import NoReturn, get_type_hints, get_args
 import json
-from typing import get_type_hints, get_args
 
 
 class Serializable:
@@ -8,7 +9,7 @@ class Serializable:
     string in format that can be easily deserialized by other microservices.
     """
 
-    def __init__(self) -> None:
+    def __init__(self) -> NoReturn:
         pass
 
     def __str__(self) -> str:
@@ -24,7 +25,7 @@ class Serializable:
     # This method is responsible for populating instance of an object
     # with data from `JSON`. Usually, `self` contains defaultly initialized
     # instance of the class
-    def populate(self, json_string) -> None:
+    def populate(self, json_string) -> NoReturn:
         json_data = json.loads(json_string)
         for exported_var in json_data.keys():
             # If deserialized object is a list
@@ -50,9 +51,13 @@ class Serializable:
                 self.__dict__[exported_var] = variable_type.deserialize(
                     json.dumps(json_data[exported_var]))
 
+    def post_populate(self) -> NoReturn:
+        pass
+
     @classmethod
-    def deserialize(cls, json_string: str):  # TODO: returning `Self` was not working
+    def deserialize(cls, json_string: str) -> Serializable:
         # All serializable classes must have parameterless constructor
         instance = cls()
         instance.populate(json_string)
+        instance.post_populate()
         return instance
