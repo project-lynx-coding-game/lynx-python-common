@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 from typing import List
-from lynx.common.enitity import Entity
 
+from lynx.common.enitity import Entity
 from lynx.common.vector import Vector
 
 

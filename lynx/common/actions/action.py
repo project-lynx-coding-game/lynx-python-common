@@ -6,16 +6,9 @@ class Action(Entity):
     with a `scene`.
     """
 
-
-    def execute(self, scene: 'Scene') -> None:
+    # TODO: maybe we should change the interface to be a part of 
+    # `Scene`, so scene will call scene.apply(action)
+    def apply(self, scene: 'Scene') -> None:
         """
-        Method used to change state of a `scene` or `runtime`
+        Method used to change state of a `scene`
         """
-
-    def log(self) -> None:
-        """
-        Simple method logging `Action`, so frontend applications
-        can modify visible state of the scene on their own.
-        This method should not modify state of the scene.
-        """
-        print(self)
