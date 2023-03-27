@@ -1,6 +1,7 @@
 from __future__ import annotations
-from typing import NoReturn, get_type_hints, get_args
+
 import json
+from typing import NoReturn, get_args, get_type_hints
 
 
 class Serializable:

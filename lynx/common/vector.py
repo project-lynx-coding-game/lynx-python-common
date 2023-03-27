@@ -1,5 +1,6 @@
-from dataclasses import dataclass
 import math
+from dataclasses import dataclass
+
 from lynx.common.serializable import Serializable
 
 
