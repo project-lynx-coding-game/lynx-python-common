@@ -1,3 +1,4 @@
+import unittest
 from typing import NoReturn
 
 from lynx.common.actions.move import Move
@@ -7,7 +8,7 @@ from lynx.common.scene import Scene
 from lynx.common.vector import Vector
 
 
-class TestMoveSerialization:
+class TestMoveSerialization(unittest.TestCase):
     expected_serialized_move = '{"type": "Move", "attributes": "{\\"object_id\\": 123, \\"vector\\": {\\"x\\": 0, \\"y\\": 1}}"}'
 
     def test_success(self) -> NoReturn:
@@ -20,7 +21,7 @@ class TestMoveSerialization:
         assert serialized_move != self.expected_serialized_move
 
 
-class TestMoveDeserialization:
+class TestMoveDeserialization(unittest.TestCase):
     expected_deserialized_move = Move(object_id=123, vector=Direction.NORTH.value)
 
     def test_success(self) -> NoReturn:
@@ -35,7 +36,7 @@ class TestMoveDeserialization:
 
         assert deserialized_move != self.expected_deserialized_move
 
-class TestMoveApply:
+class TestMoveApply(unittest.TestCase):
 
     def test_apply(self) -> NoReturn:
         expected_scene = Scene()
@@ -57,3 +58,16 @@ class TestMoveApply:
         scene._object_position_map = {k: v for k, v in scene._object_position_map.items() if v is not None}
 
         assert scene == expected_scene
+
+class TestMoveRequirements(unittest.TestCase):
+
+    def test_success(self):
+        dummy_action = Move(
+            object_id=123,
+            vector=Vector(1,1)
+        )
+
+        number_requirements = len(dummy_action.requirements())
+
+        self.assertEquals(number_requirements, 1)
+

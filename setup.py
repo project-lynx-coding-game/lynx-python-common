@@ -1,6 +1,6 @@
 #!/bin/python
 
-from setuptools import setup
+from setuptools import find_packages, setup
 
 setup(
     name="lynx-python-common",
