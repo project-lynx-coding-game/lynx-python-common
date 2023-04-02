@@ -16,7 +16,7 @@ class Action(Entity):
         Method used to change state of a `scene`
         """
 
-    def requirements(self) -> List[Callable[['Scene'], bool]]:
+    def satisfies_requirements(self) -> bool:
         """
-        Method return all requirements needed to apply changes
+        Method returns all requirements needed to apply changes
         """
