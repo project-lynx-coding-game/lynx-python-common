@@ -1,4 +1,7 @@
+from typing import Callable, List
+
 from lynx.common.enitity import Entity
+
 
 class Action(Entity):
     """
@@ -11,4 +14,9 @@ class Action(Entity):
     def apply(self, scene: 'Scene') -> None:
         """
         Method used to change state of a `scene`
+        """
+
+    def satisfies_requirements(self) -> bool:
+        """
+        Method returns all requirements needed to apply changes
         """

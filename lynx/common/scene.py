@@ -1,7 +1,5 @@
-from dataclasses import dataclass
-from typing import Dict, List, NoReturn, Union
+from typing import Dict, NoReturn, Optional
 
-from lynx.common.enitity import Entity
 from lynx.common.object import *
 from lynx.common.serializable import Serializable
 from lynx.common.vector import Vector
@@ -25,12 +23,12 @@ class Scene(Serializable):
             self._object_position_map[entity.position] = entity
             self._object_id_map[entity.id] = entity
 
-    def get_object_by_id(self, id: int) -> Union[Object, None]:
+    def get_object_by_id(self, id: int) -> Optional[Object]:
         return self._object_id_map.get(id)
-    
-    def get_object_by_position(self, position: Vector) -> Union[Object, None]:
+
+    def get_object_by_position(self, position: Vector) -> Optional[Object]:
         return self._object_map.get(position)
-    
+
     def move_object(self, object: Object, vector: Vector) -> NoReturn:
         self._object_position_map[object.position] = None
         object.position = object.position + vector
