@@ -8,8 +8,9 @@ from lynx.common.vector import Vector
 @dataclass
 class Object(Entity):
     """
-    Abstract object existing in a `scene`. Represents part of scene's state,
-    in contrast to `Action` which represents only modifications of the state.
+    `Object` existing in a `Scene`.
+    Represents part of `Scene`'s state, in contrast to `Action` which represents only modifications of the state.
+    Always set name to `Object` type in constructor.
     """
 
     id: int = -1
