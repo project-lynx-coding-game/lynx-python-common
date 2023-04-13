@@ -10,7 +10,7 @@ from lynx.common.vector import Vector
 
 
 class TestMoveSerialization:
-    expected_serialized_move = '{"type": "Move", "attributes": "{\\"object_id\\": 123, \\"movement\\": {\\"x\\": 0, \\"y\\": 1}}"}'
+    expected_serialized_move = '{"type": "Move", "attributes": {"object_id": 123, "movement": {"x": 0, "y": 1}}}'
 
     def test_success(self) -> NoReturn:
         serialized_move = Move(

@@ -1,5 +1,5 @@
 from __future__ import annotations
-from dataclasses import dataclass
+from dataclasses import dataclass, field
 
 from lynx.common.serializable import Serializable
 
@@ -9,13 +9,13 @@ class Entity(Serializable):
     @dataclass
     class _Exported(Serializable):
         type: str = ""
-        attributes: str = ""
+        attributes: dict = field(default_factory=dict)
 
     def get_type(self) -> str:
         return type(self).__name__
 
     def get_attributes(self) -> str:
-        return super().serialize()
+        return super()
 
     def serialize(self) -> str:
         return self._Exported(self.get_type(), self.get_attributes()).serialize()
