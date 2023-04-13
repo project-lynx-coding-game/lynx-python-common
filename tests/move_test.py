@@ -1,3 +1,4 @@
+import json
 from typing import NoReturn
 from unittest.mock import patch, MagicMock
 
@@ -28,14 +29,14 @@ class TestMoveDeserialization:
         object_id=123, movement=Direction.NORTH.value)
 
     def test_success(self) -> NoReturn:
-        serialized_move = '{"type": "Move", "attributes": "{\\"object_id\\": 123, \\"movement\\": {\\"x\\": 0, \\"y\\": 1}}"}'
-        deserialized_move = Move.deserialize(serialized_move)
+        serialized_move = '{"type": "Move", "attributes": {"object_id": 123, "movement": {"x": 0, "y": 1}}}'
+        deserialized_move = Move.deserialize(json.loads(serialized_move))
 
         assert deserialized_move == self.expected_deserialized_move
 
     def test_failure(self) -> NoReturn:
-        serialized_move = '{"type": "Move", "attributes": "{\\"object_id\\": 345, \\"movement\\": {\\"x\\": 1, \\"y\\": 2}}"}'
-        deserialized_move = Move.deserialize(serialized_move)
+        serialized_move = '{"type": "Move", "attributes": {"object_id": 123, "movement": {"x": 1, "y": 2}}}'
+        deserialized_move = Move.deserialize(json.loads(serialized_move))
 
         assert deserialized_move != self.expected_deserialized_move
 

@@ -1,3 +1,4 @@
+import json
 from dataclasses import dataclass, field
 from typing import List
 
@@ -23,7 +24,7 @@ class Dummy(Serializable):
 
 
 class TestSerializableSerialization:
-    expected_serialized_test_object = '{"exported_field": "DO_EXPORT_THAT+++", "complex_field": {\"nested_field\": \"THIS_SHOULD_BE_NESTED+++\"}}'
+    expected_serialized_test_object = '{"exported_field": "DO_EXPORT_THAT+++", "complex_field": {"nested_field": "THIS_SHOULD_BE_NESTED+++"}}'
 
     def test_success(self):
         test_object = Dummy()
@@ -48,14 +49,14 @@ class TestSerializableDeserialization:
     expected_deserialized_test_object.complex_field.nested_field += "+++"
 
     def test_success(self):
-        serialized_test_object = '{"exported_field": "DO_EXPORT_THAT+++", "complex_field": {\"nested_field\": \"THIS_SHOULD_BE_NESTED+++\"}}'
-        deserialized_test_object = Dummy.deserialize(serialized_test_object)
+        serialized_test_object = '{"exported_field": "DO_EXPORT_THAT+++", "complex_field": {"nested_field": "THIS_SHOULD_BE_NESTED+++"}}'
+        deserialized_test_object = Dummy.deserialize(json.loads(serialized_test_object))
 
         assert deserialized_test_object == self.expected_deserialized_test_object
 
     def test_failure(self):
-        serialized_test_object = '{"exported_field": "DO_EXPORT_THAT---", "complex_field": {\"nested_field\": \"THIS_SHOULD_BE_NESTED---\"}}'
-        deserialized_test_object = Dummy.deserialize(serialized_test_object)
+        serialized_test_object = '{"exported_field": "DO_EXPORT_THAT---", "complex_field": {"nested_field": "THIS_SHOULD_BE_NESTED---"}}'
+        deserialized_test_object = Dummy.deserialize(json.loads(serialized_test_object))
 
         assert deserialized_test_object != self.expected_deserialized_test_object
 
@@ -91,13 +92,13 @@ class TestSerializableListDeserialization:
 
     def test_success(self):
         serialized_test_list = '{"list": [{"number": 1}, {"number": 2}, {"number": 3}]}'
-        deserialized_test_list = DummyList.deserialize(serialized_test_list)
+        deserialized_test_list = DummyList.deserialize(json.loads(serialized_test_list))
 
         assert deserialized_test_list == self.expected_deserialized_test_list
 
     def test_failure(self):
         serialized_test_list = '{"list": [{"number": 4}, {"number": 5}, {"number": 6}]}'
-        deserialized_test_list = DummyList.deserialize(serialized_test_list)
+        deserialized_test_list = DummyList.deserialize(json.loads(serialized_test_list))
 
         assert deserialized_test_list != self.expected_deserialized_test_list
 

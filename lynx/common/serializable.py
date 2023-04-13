@@ -1,4 +1,5 @@
 from __future__ import annotations
+from typing import Union
 
 import json
 from typing import NoReturn, get_args, get_type_hints
@@ -26,8 +27,7 @@ class Serializable:
     # This method is responsible for populating instance of an object
     # with data from `JSON`. Usually, `self` contains defaultly initialized
     # instance of the class
-    def populate(self, json_string) -> NoReturn:
-        json_data = json.loads(json_string)
+    def populate(self, json_data) -> NoReturn:
         for exported_var in json_data.keys():
             # If deserialized object is a list
             if type(self.__dict__[exported_var]) == list:
@@ -42,23 +42,25 @@ class Serializable:
                 else:
                     for serialized_element in json_data[exported_var]:
                         self.__dict__[exported_var].append(
-                            element_type.deserialize(json.dumps(serialized_element)))
+                            element_type.deserialize(serialized_element))
             # If object we are deserializing is primitive
             elif not hasattr(self.__dict__[exported_var], '__dict__'):
                 self.__dict__[exported_var] = json_data[exported_var]
             # Deserialzied object is a class
             else:
                 variable_type = type(self.__dict__[exported_var])
-                self.__dict__[exported_var] = variable_type.deserialize(
-                    json.dumps(json_data[exported_var]))
+                self.__dict__[exported_var] = variable_type.deserialize(json_data[exported_var])
 
     def post_populate(self) -> NoReturn:
         pass
 
     @classmethod
-    def deserialize(cls, json_string: str) -> Serializable:
+    def deserialize(cls, json_data: Union[dict, str]) -> Serializable:
+        if json_data is str:
+            json_data = json.loads(json_data)
+
         # All serializable classes must have parameterless constructor
         instance = cls()
-        instance.populate(json_string)
+        instance.populate(json_data)
         instance.post_populate()
         return instance

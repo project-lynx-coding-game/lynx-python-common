@@ -1,3 +1,4 @@
+import json
 from typing import NoReturn
 
 from lynx.common.actions.move import Move
@@ -7,9 +8,9 @@ from lynx.common.vector import Vector
 
 
 class TestSceneSerialization:
-    expected_serialized_scene = '{"entities": [{"type": "Object", "attributes": {"id": 123, "name": "dummy", "position": {"x": 0, "y": 0}, ' \
-                                '"additional_positions": [], "state": "", "walkable": false, "tick": "", ' \
-                                '"on_death": "", "owner": ""}}, {"type": "Move", "attributes": {"object_id": 456, '\
+    expected_serialized_scene = '{"entities": [{"type": "Object", "attributes": {"id": 123, "name": "dummy", "position": {"x": ' \
+                                '0, "y": 0}, "additional_positions": [], "state": "", "walkable": false, "tick": "", ' \
+                                '"on_death": "", "owner": ""}}, {"type": "Move", "attributes": {"object_id": 456, ' \
                                 '"movement": {"x": 1, "y": 1}}}]}'
 
     def test_success(self) -> NoReturn:
@@ -42,19 +43,17 @@ class TestSceneDeserialization:
     expected_deserialized_scene.add_entity(dummy_action)
 
     def test_success(self) -> NoReturn:
-        serialized_scene = '{"entities": [{"type": "Object", "attributes": "{\\"id\\": 123, \\"name\\": \\"dummy\\", \\"position\\": {\\"x\\": 0, ' \
-                           '\\"y\\": 0}, \\"additional_positions\\": [], \\"state\\": \\"\\", \\"walkable\\": false, \\"tick\\": \\"\\", ' \
-                           '\\"on_death\\": \\"\\", \\"owner\\": \\"\\"}"}, {"type": "Move", "attributes": "{\\"object_id\\": 456, \\"movement\\": {' \
-                           '\\"x\\": 1, \\"y\\": 1}}"}]}'
-        deserialzied_scene = Scene.deserialize(serialized_scene)
+        serialized_scene = '{"entities": [{"type": "Object", "attributes": {"id": 123, "name": "dummy", "position": {"x": 0, "y": 0}, ' \
+                           '"additional_positions": [], "state": "", "walkable": false, "tick": "", "on_death": "", "owner": ""}}, {"type": "Move", ' \
+                           '"attributes": {"object_id": 456, "movement": {"x": 1, "y": 1}}}]} '
+        deserialzied_scene = Scene.deserialize(json.loads(serialized_scene))
 
         assert deserialzied_scene == self.expected_deserialized_scene
 
     def test_failure(self) -> NoReturn:
-        serialized_scene = '{"entities": [{"type": "Object", "attributes": "{\\"id\\": 789, \\"name\\": \\"dummy\\", \\"position\\": {\\"x\\": 0, ' \
-                           '\\"y\\": 0}, \\"additional_positions\\": [], \\"state\\": \\"\\", \\"walkable\\": false, \\"tick\\": \\"\\", ' \
-                           '\\"on_death\\": \\"\\", \\"owner\\": \\"\\"}"}, {"type": "Move", "attributes": "{\\"object_id\\": 1011, \\"movement\\": {' \
-                           '\\"x\\": 1, \\"y\\": 1}}"}]}'
-        deserialzied_scene = Scene.deserialize(serialized_scene)
+        serialized_scene = '{"entities": [{"type": "Object", "attributes": {"id": 789, "name": "dummy", "position": {"x": 0, "y": 0}, ' \
+                           '"additional_positions": [], "state": "", "walkable": false, "tick": "", "on_death": "", "owner": ""}}, {"type": "Move", ' \
+                           '"attributes": {"object_id": 1011, "movement": {"x": 1, "y": 1}}}]} '
+        deserialzied_scene = Scene.deserialize(json.loads(serialized_scene))
 
         assert deserialzied_scene != self.expected_deserialized_scene
