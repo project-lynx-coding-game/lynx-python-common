@@ -51,12 +51,9 @@ class TestMoveApply:
         scene.add_entity(dummy_action)
         dummy_action.apply(scene)
 
-        # TODO: it's wrong but not sure how we should handle `None` values
-        # left after moving an object. I leave it for later because there's no
-        # implementation of multi-field objects too
-        scene._object_position_map = {k: v for k, v in scene._object_position_map.items() if v is not None}
-
-        assert scene == expected_scene
+        assert expected_dummy_object == dummy_object
+        assert scene.get_objects_by_position(Vector(1,1)) == [dummy_object]
+        assert scene.get_objects_by_position(Vector(0,0)) == []
 
 
 class TestMoveRequirements:
