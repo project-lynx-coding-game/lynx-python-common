@@ -14,11 +14,8 @@ class Entity(Serializable):
     def get_type(self) -> str:
         return type(self).__name__
 
-    def get_attributes(self) -> dict:
-        return vars(self)
-
     def serialize(self) -> str:
-        return self._Exported(self.get_type(), self.get_attributes()).serialize()
+        return self._Exported(self.get_type(), self.__dict__).serialize()
 
     @classmethod
     def deserialize(cls, json_string: str) -> Entity:
