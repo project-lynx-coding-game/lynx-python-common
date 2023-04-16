@@ -5,6 +5,7 @@ from lynx.common.actions.move import Move
 from lynx.common.enums import Direction
 from lynx.common.object import Object
 from lynx.common.scene import Scene
+from lynx.common.square import Square
 from lynx.common.vector import Vector
 
 
@@ -12,16 +13,19 @@ class TestMoveSerialization:
     expected_serialized_move = '{"type": "Move", "attributes": "{\\"object_id\\": 123, \\"movement\\": {\\"x\\": 0, \\"y\\": 1}}"}'
 
     def test_success(self) -> NoReturn:
-        serialized_move = Move(object_id=123, movement=Direction.NORTH.value).serialize()
+        serialized_move = Move(
+            object_id=123, movement=Direction.NORTH.value).serialize()
         assert serialized_move == self.expected_serialized_move
 
     def test_failure(self) -> NoReturn:
-        serialized_move = Move(object_id=345, movement=Direction.WEST.value).serialize()
+        serialized_move = Move(
+            object_id=345, movement=Direction.WEST.value).serialize()
         assert serialized_move != self.expected_serialized_move
 
 
 class TestMoveDeserialization:
-    expected_deserialized_move = Move(object_id=123, movement=Direction.NORTH.value)
+    expected_deserialized_move = Move(
+        object_id=123, movement=Direction.NORTH.value)
 
     def test_success(self) -> NoReturn:
         serialized_move = '{"type": "Move", "attributes": "{\\"object_id\\": 123, \\"movement\\": {\\"x\\": 0, \\"y\\": 1}}"}'
@@ -39,7 +43,8 @@ class TestMoveDeserialization:
 class TestMoveApply:
     def test_apply(self) -> NoReturn:
         expected_scene = Scene()
-        expected_dummy_object = Object(id=123, name="dummy", position=Vector(1, 1))
+        expected_dummy_object = Object(
+            id=123, name="dummy", position=Vector(1, 1))
         expected_dummy_action = Move(object_id=123, movement=Vector(1, 1))
         expected_scene.add_entity(expected_dummy_object)
         expected_scene.add_entity(expected_dummy_action)
@@ -52,8 +57,8 @@ class TestMoveApply:
         dummy_action.apply(scene)
 
         assert expected_dummy_object == dummy_object
-        assert scene.get_objects_by_position(Vector(1,1)) == [dummy_object]
-        assert scene.get_objects_by_position(Vector(0,0)) == []
+        assert scene.get_objects_by_position(Vector(1, 1)) == [dummy_object]
+        assert scene.get_objects_by_position(Vector(0, 0)) == []
 
 
 class TestMoveRequirements:
@@ -63,8 +68,9 @@ class TestMoveRequirements:
             object_id=123,
             movement=Vector(1, 1)
         )
-        walkable_object = MagicMock(walkable=True)
-        mock_scene.get_object_by_position.return_value = walkable_object
+        walkable_square = Square()
+        walkable_square.walkable = MagicMock(return_value=True)
+        mock_scene.get_square.return_value = walkable_square
 
         result: bool = dummy_action.satisfies_requirements(mock_scene)
 

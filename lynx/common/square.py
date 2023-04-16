@@ -26,3 +26,6 @@ class Square:
             self.ground = None
         
         self.objects.remove(object)
+
+    def walkable(self) -> bool:
+        return self.ground != None

@@ -12,7 +12,7 @@ class Scene(Serializable):
     _square_position_map: Dict[Vector, Square] = field(default_factory=dict)
     _object_id_map: Dict[int, Object] = field(default_factory=dict)
 
-    def _get_square(self, position: Vector) -> Square:
+    def get_square(self, position: Vector) -> Square:
         # This method guarantees that the square is correct
         if square := self._square_position_map.get(position):
             return square
@@ -23,7 +23,7 @@ class Scene(Serializable):
 
     def _add_to_maps(self, entity: Entity) -> NoReturn:
         if type(entity) is Object:
-            self._get_square(entity.position).append(entity)
+            self.get_square(entity.position).append(entity)
             self._object_id_map[entity.id] = entity
 
     def post_populate(self) -> NoReturn:
@@ -38,9 +38,9 @@ class Scene(Serializable):
         return self._object_id_map.get(id)
 
     def get_objects_by_position(self, position: Vector) -> Optional[List[Object]]:
-        return self._get_square(position).objects
+        return self.get_square(position).objects
 
     def move_object(self, object: Object, vector: Vector) -> NoReturn:
-        self._get_square(object.position).remove(object)
+        self.get_square(object.position).remove(object)
         object.position = object.position + vector
-        self._get_square(object.position).append(object)
+        self.get_square(object.position).append(object)
