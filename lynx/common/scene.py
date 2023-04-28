@@ -42,7 +42,7 @@ class Scene(Serializable):
     def get_objects_by_position(self, position: Vector) -> Optional[List[Object]]:
         return self.get_square(position).objects
 
-    def generate_id(self):
+    def generate_id(self) -> int:
         max_id_number = 1000000
         ids = list(self._object_id_map.keys())
         candidate_id = random.randint(0, max_id_number)
@@ -61,5 +61,5 @@ class Scene(Serializable):
         self._object_id_map.pop(object.id)
         del object
 
-    def add_to_pending_actions(self, action: str):
+    def add_to_pending_actions(self, action: str) -> NoReturn:
         self.pending_actions.append(action)
