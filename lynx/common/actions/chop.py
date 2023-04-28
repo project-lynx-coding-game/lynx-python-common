@@ -12,8 +12,8 @@ class Chop(Action):
 	"""
 	Simple action used to hit/destroy object, which stands on the given destination.
 	"""
-	position: Vector = Vector(1, 0)
 	object_id: int = -1
+	position: Vector = Vector(1, 0)
 
 	def apply(self, scene: 'Scene') -> None:
 		objects_on_square = scene.get_objects_by_position(self.position)
