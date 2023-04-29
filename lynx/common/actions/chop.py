@@ -2,8 +2,8 @@ from dataclasses import dataclass
 
 from lynx.common.actions.action import Action
 from lynx.common.vector import Vector
-from lynx.common.actions.removeObject import RemoveObject
-from lynx.common.actions.createObject import CreateObject
+from lynx.common.actions.remove_object import RemoveObject
+from lynx.common.actions.create_object import CreateObject
 from lynx.common.object import Object
 from lynx.common.actions.common_requirements import CommonRequirements
 
