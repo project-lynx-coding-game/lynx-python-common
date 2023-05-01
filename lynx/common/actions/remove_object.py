@@ -17,4 +17,4 @@ class RemoveObject(Action):
 		scene.remove_object(object)
 
 	def satisfies_requirements(self, scene: 'Scene') -> bool:
-		return True
+		return scene.get_object_by_id(self.object_id) is not None
