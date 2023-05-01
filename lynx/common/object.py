@@ -22,3 +22,4 @@ class Object(Entity):
     tick: str = ""
     on_death: str = ""
     owner: str = ""
+    pickable: bool = False

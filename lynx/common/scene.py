@@ -4,11 +4,13 @@ from lynx.common.square import Square
 from lynx.common.object import *
 from lynx.common.serializable import Serializable
 from lynx.common.vector import Vector
+import random
 
 
 @dataclass
 class Scene(Serializable):
     entities: List[Entity] = field(default_factory=list)
+    pending_actions: List[str] = field(default_factory=list)  # Transformations which occur, during other transformations (e.g. chop -> Create logs)
     _square_position_map: Dict[Vector, Square] = field(default_factory=dict)
     _object_id_map: Dict[int, Object] = field(default_factory=dict)
 
@@ -40,7 +42,24 @@ class Scene(Serializable):
     def get_objects_by_position(self, position: Vector) -> Optional[List[Object]]:
         return self.get_square(position).objects
 
+    def generate_id(self) -> int:
+        MAX_ID = 1000000
+        ids = list(self._object_id_map.keys())
+        candidate_id = random.randint(0, MAX_ID)
+        while candidate_id in ids:
+            candidate_id = random.randint(0, MAX_ID)
+        return candidate_id
+
     def move_object(self, object: Object, vector: Vector) -> NoReturn:
         self.get_square(object.position).remove(object)
         object.position = object.position + vector
         self.get_square(object.position).append(object)
+
+    def remove_object(self, object: Object) -> NoReturn:
+        self.get_square(object.position).remove(object)
+        self.entities.remove(object)
+        self._object_id_map.pop(object.id)
+        del object
+
+    def add_to_pending_actions(self, action: str) -> NoReturn:
+        self.pending_actions.append(action)
