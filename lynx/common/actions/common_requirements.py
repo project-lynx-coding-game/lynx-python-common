@@ -27,3 +27,11 @@ class CommonRequirements:
 		if distance <= max_distance:
 			return True
 		return False
+
+	@staticmethod
+	def does_pickable_object_exists_on_square(scene: 'Scene', position: Vector, name: str) -> bool:
+		objects_on_square = scene.get_objects_by_position(position)
+		for object in objects_on_square:
+			if object.name == name and object.pickable is True:
+				return True
+		return False

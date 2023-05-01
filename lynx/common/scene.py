@@ -63,3 +63,6 @@ class Scene(Serializable):
 
     def add_to_pending_actions(self, action: str) -> NoReturn:
         self.pending_actions.append(action)
+
+    def remove_from_map(self, object: Object):
+        self.get_square(object.position).remove(object)

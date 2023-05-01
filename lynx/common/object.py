@@ -23,3 +23,5 @@ class Object(Entity):
     on_death: str = ""
     owner: str = ""
     pickable: bool = False
+    hidden: bool = False    #Idk if we need this, because maybe it will be enough just not to have this on square list
+    inventory:  List[int] = field(default_factory=list)
