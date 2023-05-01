@@ -43,11 +43,11 @@ class Scene(Serializable):
         return self.get_square(position).objects
 
     def generate_id(self) -> int:
-        max_id_number = 1000000
+        MAX_ID = 1000000
         ids = list(self._object_id_map.keys())
-        candidate_id = random.randint(0, max_id_number)
+        candidate_id = random.randint(0, MAX_ID)
         while candidate_id in ids:
-            candidate_id = random.randint(0, max_id_number)
+            candidate_id = random.randint(0, MAX_ID)
         return candidate_id
 
     def move_object(self, object: Object, vector: Vector) -> NoReturn:

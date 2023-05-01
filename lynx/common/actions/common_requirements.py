@@ -13,17 +13,12 @@ class CommonRequirements:
 		return square_at_destination.walkable()
 
 	@staticmethod
-	def does_object_exists_on_square(scene: 'Scene', position: Vector, name: str) -> bool:
+	def is_on_square(scene: 'Scene', position: Vector, name: str) -> bool:
 		objects_on_square = scene.get_objects_by_position(position)
-		for object in objects_on_square:
-			if object.name == name:
-				return True
-		return False
+		return name in [object.name for object in objects_on_square]
 
 	@staticmethod
 	def is_in_range(scene: 'Scene', object_id: int, position: Vector, max_distance: int) -> bool:
 		object: Object = scene.get_object_by_id(object_id)
 		distance = object.position.dist_to(position)
-		if distance <= max_distance:
-			return True
-		return False
+		return distance <= max_distance
