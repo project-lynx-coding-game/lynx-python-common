@@ -36,7 +36,9 @@ class TestChopApply:
 		scene.add_entity(dummy_object)
 		scene.add_entity(dummy_tree)
 		scene.add_entity(dummy_chop)
-		dummy_chop.apply(scene)
+		
+		if dummy_chop.satisfies_requirements(scene):
+			dummy_chop.apply(scene)
 		for action in scene.pending_actions:
 			Action.deserialize(action).apply(scene)
 		scene.pending_actions.clear()
