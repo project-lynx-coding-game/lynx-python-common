@@ -5,8 +5,9 @@ from lynx.common.actions.push import Push
 from lynx.common.enums import Direction
 from lynx.common.object import Object
 from lynx.common.scene import Scene
-from lynx.common.square import Square
+from lynx.common.enitity import Entity
 from lynx.common.vector import Vector
+from lynx.common.actions.action import Action
 
 
 class TestPushSerialization:
@@ -68,6 +69,10 @@ class TestPushApply:
         scene.add_entity(pusher_object)
         scene.add_entity(dummy_action)
         dummy_action.apply(scene)
+
+        assert len(scene.pending_actions) == 1
+        
+        Entity.deserialize(scene.pending_actions[0]).apply(scene)
 
         assert expected_pushable_object == pushable_object
         assert scene.get_objects_by_position(Vector(0, 1)) == [pushable_object]
