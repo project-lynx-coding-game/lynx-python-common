@@ -10,6 +10,7 @@ class RemoveObject(Action):
 	"""
 	Remove objects from the game
 	"""
+	# TODO: put all special values into an Enum
 	object_id: int = -1
 
 	def apply(self, scene: 'Scene') -> None:

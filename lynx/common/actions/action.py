@@ -16,7 +16,7 @@ class Action(Entity):
         Method used to change state of a `scene`
         """
 
-    def satisfies_requirements(self) -> bool:
+    def satisfies_requirements(self, scene: 'Scene') -> bool:
         """
         Method returns all requirements needed to apply changes
         """

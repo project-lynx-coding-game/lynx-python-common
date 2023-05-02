@@ -18,6 +18,7 @@ class Chop(Action):
 	def apply(self, scene: 'Scene') -> None:
 		objects_on_square = scene.get_objects_by_position(self.target_position)
 		for object in objects_on_square:
+			# TODO: put all object names into an Enum
 			if object.name == 'Tree':
 				remove_action = RemoveObject(object.id)
 				log = Object(id=scene.generate_id(), name='Log', position=object.position, pickable=True)
