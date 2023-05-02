@@ -20,8 +20,7 @@ class Push(Action):
 	def apply(self, scene: 'Scene') -> None:
 		objects_on_square = scene.get_objects_by_position(self.direction)
 		for object in filter(lambda x: x.pushable, objects_on_square):
-			move = Move(object_id=object.id, movement=self.direction)
-			scene.add_to_pending_actions(move.serialize())
+			Move(object_id=object.id, movement=self.direction).apply(scene)
 
 	def satisfies_requirements(self, scene: 'Scene') -> bool:
 		object: Object = scene.get_object_by_id(self.object_id)
