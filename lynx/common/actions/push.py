@@ -1,7 +1,7 @@
 from dataclasses import dataclass
 
 from lynx.common.object import Object
-from lynx.common.enums import Direction
+from lynx.common.vector import Vector
 from lynx.common.actions.action import Action
 from lynx.common.actions.move import Move
 from lynx.common.actions.common_requirements import CommonRequirements
@@ -14,12 +14,13 @@ class Push(Action):
 	"""
 
 	object_id: int = -1
-	direction: Direction = Direction.EAST
+	# TODO: change to Direction type
+	direction: Vector = Vector(1, 0)
 
 	def apply(self, scene: 'Scene') -> None:
 		objects_on_square = scene.get_objects_by_position(self.direction)
 		for object in filter(lambda x: x.pushable, objects_on_square):
-			move = Move(object_id=object.id, movement=self.direction.value)
+			move = Move(object_id=object.id, movement=self.direction)
 			scene.add_to_pending_actions(move.serialize())
 
 	def satisfies_requirements(self, scene: 'Scene') -> bool:
