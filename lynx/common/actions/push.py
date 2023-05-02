@@ -1,0 +1,28 @@
+from dataclasses import dataclass
+
+from lynx.common.object import Object
+from lynx.common.enums import Direction
+from lynx.common.actions.action import Action
+from lynx.common.actions.move import Move
+from lynx.common.actions.common_requirements import CommonRequirements
+
+
+@dataclass
+class Push(Action):
+	"""
+	Simple action used to push a pushable `Object` in given direction.
+	"""
+
+	object_id: int = -1
+	direction: Direction = Direction.EAST
+
+	def apply(self, scene: 'Scene') -> None:
+		objects_on_square = scene.get_objects_by_position(self.direction)
+		for object in filter(lambda x: x.pushable, objects_on_square):
+			move = Move(object_id=object.id, movement=self.direction.value)
+			scene.add_to_pending_actions(move.serialize())
+
+	def satisfies_requirements(self, scene: 'Scene') -> bool:
+		object: Object = scene.get_object_by_id(self.object_id)
+		target_position = object.position + self.direction
+		return CommonRequirements.is_in_range(scene, self.object_id, target_position, 1) and CommonRequirements.is_pushable(scene, target_position)

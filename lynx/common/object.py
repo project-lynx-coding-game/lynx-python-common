@@ -23,3 +23,4 @@ class Object(Entity):
     on_death: str = ""
     owner: str = ""
     pickable: bool = False
+    pushable: bool = False
