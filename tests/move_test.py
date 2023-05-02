@@ -40,6 +40,22 @@ class TestMoveDeserialization:
         assert deserialized_move != self.expected_deserialized_move
 
 
+class TestMoveRequirements:
+    @patch('lynx.common.scene.Scene')
+    def test_success(self, mock_scene):
+        dummy_action = Move(
+            object_id=123,
+            movement=Vector(1, 1)
+        )
+        walkable_square = Square()
+        walkable_square.walkable = MagicMock(return_value=True)
+        mock_scene.get_square.return_value = walkable_square
+
+        result: bool = dummy_action.satisfies_requirements(mock_scene)
+
+        assert result is True
+
+
 class TestMoveApply:
     def test_apply(self) -> NoReturn:
         expected_scene = Scene()
@@ -59,19 +75,3 @@ class TestMoveApply:
         assert expected_dummy_object == dummy_object
         assert scene.get_objects_by_position(Vector(1, 1)) == [dummy_object]
         assert scene.get_objects_by_position(Vector(0, 0)) == []
-
-
-class TestMoveRequirements:
-    @patch('lynx.common.scene.Scene')
-    def test_success(self, mock_scene):
-        dummy_action = Move(
-            object_id=123,
-            movement=Vector(1, 1)
-        )
-        walkable_square = Square()
-        walkable_square.walkable = MagicMock(return_value=True)
-        mock_scene.get_square.return_value = walkable_square
-
-        result: bool = dummy_action.satisfies_requirements(mock_scene)
-
-        assert result is True

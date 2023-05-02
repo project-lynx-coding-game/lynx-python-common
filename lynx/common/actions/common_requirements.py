@@ -30,3 +30,13 @@ class CommonRequirements:
 
 		distance = object.position.dist_to(position)
 		return distance <= max_distance
+
+	@staticmethod
+	def is_pushable(scene: 'Scene', position: Vector) -> bool:
+		objects_on_square = scene.get_objects_by_position(position)
+
+		for object in objects_on_square:
+			if object.pushable:
+				return True
+
+		return False
