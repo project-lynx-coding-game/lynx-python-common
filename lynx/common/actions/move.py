@@ -16,7 +16,8 @@ class Move(Action):
     movement: Vector = Vector(0, 0)
 
     def satisfies_requirements(self, scene: 'Scene') -> bool:
-        return CommonRequirements.is_walkable(scene, self.object_id, self.movement)
+        destination_position = scene.get_object_by_id(self.object_id).position + self.movement
+        return CommonRequirements.is_walkable(scene, destination_position)
 
     def apply(self, scene: 'Scene') -> None:
         object: Object = scene.get_object_by_id(self.object_id)

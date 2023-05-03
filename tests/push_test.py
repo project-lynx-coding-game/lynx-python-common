@@ -24,7 +24,7 @@ class TestPushSerialization:
         assert serialized_push != self.expected_serialized_push
 
 
-class TestMoveDeserialization:
+class TestPushDeserialization:
     expected_deserialized_push = Push(object_id=123, direction=Direction.WEST.value)
     expected_deserialized_push.pushed_object_ids = [1, 2, 3]
 
@@ -44,16 +44,44 @@ class TestMoveDeserialization:
 
 
 class TestPushSatisfiesRequirements:
-    def test_satisfies(self) -> NoReturn:
+    def test_square_walkable_satisfies(self) -> NoReturn:
         scene = Scene()
         pushable_object = Object(id=123, name="dummy", position=Vector(1, 1), pushable=True)
         pusher_object = Object(id=456, name="dummy", position=Vector(2, 1))
+        walkable_object = Object(id=789, name="dummy123", position=Vector(0, 1), walkable=True)
         dummy_action = Push(object_id=456, direction=Vector(-1, 0))
         scene.add_entity(pushable_object)
         scene.add_entity(pusher_object)
+        scene.add_entity(walkable_object)
         scene.add_entity(dummy_action)
 
         assert dummy_action.satisfies_requirements(scene)
+
+    def test_square_not_walkable_taken_by_same_object_satisfies(self) -> NoReturn:
+        scene = Scene()
+        pushable_object = Object(id=123, name="dummy", position=Vector(1, 1), pushable=True)
+        pusher_object = Object(id=456, name="dummy", position=Vector(2, 1))
+        blocking_object = Object(id=789, name="dummy", position=Vector(0, 1), walkable=False)
+        dummy_action = Push(object_id=456, direction=Vector(-1, 0))
+        scene.add_entity(pushable_object)
+        scene.add_entity(pusher_object)
+        scene.add_entity(blocking_object)
+        scene.add_entity(dummy_action)
+
+        assert dummy_action.satisfies_requirements(scene)
+
+    def test_square_not_walkable_taken_by_different_object_does_not_satisfy(self) -> NoReturn:
+        scene = Scene()
+        pushable_object = Object(id=123, name="dummy", position=Vector(1, 1), pushable=True)
+        pusher_object = Object(id=456, name="dummy", position=Vector(2, 1))
+        blocking_object = Object(id=789, name="dummy123", position=Vector(0, 1), walkable=False)
+        dummy_action = Push(object_id=456, direction=Vector(-1, 0))
+        scene.add_entity(pushable_object)
+        scene.add_entity(pusher_object)
+        scene.add_entity(blocking_object)
+        scene.add_entity(dummy_action)
+
+        assert not dummy_action.satisfies_requirements(scene)
 
 
 class TestPushApply:
@@ -71,12 +99,12 @@ class TestPushApply:
         pushable_object = Object(id=123, name="dummy", position=Vector(1, 1), pushable=True)
         pusher_object = Object(id=456, name="dummy", position=Vector(2, 1))
         dummy_action = Push(object_id=456, direction=Vector(-1, 0))
+        dummy_action.pushed_object_ids = [123]
         scene.add_entity(pushable_object)
         scene.add_entity(pusher_object)
         scene.add_entity(dummy_action)
         dummy_action.apply(scene)
 
-        assert expected_dummy_action == dummy_action
         assert expected_pushable_object == pushable_object
         assert scene.get_objects_by_position(Vector(0, 1)) == [pushable_object]
         assert scene.get_objects_by_position(Vector(1, 1)) == []

@@ -16,7 +16,7 @@ class TestIsWalkable:
         mock_square_at_destination.walkable = MagicMock(return_value=True)
         mock_scene.get_square.return_value = mock_square_at_destination
 
-        result: bool = CommonRequirements.is_walkable(mock_scene, 1, Vector(1, 0))
+        result: bool = CommonRequirements.is_walkable(mock_scene, Vector(1, 0))
 
         assert result
 
@@ -26,24 +26,21 @@ class TestIsWalkable:
         mock_square_at_destination.walkable = MagicMock(return_value=False)
         mock_scene.get_square.return_value = mock_square_at_destination
 
-        result: bool = CommonRequirements.is_walkable(mock_scene, 1, Vector(1, 0))
+        result: bool = CommonRequirements.is_walkable(mock_scene, Vector(1, 0))
 
         assert not result
 
 
-class TestIsPushable:
+class TestIsStackable:
+    scene = Scene()
+    dummy_object1 = Object(id=123, name="dummy", position=Vector(0, 0))
+    scene.add_entity(dummy_object1)
+
     def test_success(self) -> NoReturn:
-        scene = Scene()
-        dummy_object1 = Object(id=123, name="dummy", position=Vector(0, 0), pushable=False)
-        dummy_object2 = Object(id=456, name="dummy", position=Vector(0, 0), pushable=True)
-        scene.add_entity(dummy_object1)
-        scene.add_entity(dummy_object2)
+        assert CommonRequirements.is_stackable(self.scene, Vector(0, 0), "dummy")
 
-        assert CommonRequirements.is_pushable(scene, Vector(0, 0))
+    def test_different_object_name_failure(self) -> NoReturn:
+        assert not CommonRequirements.is_stackable(self.scene, Vector(0, 0), "dummy123")
 
-    def test_failure(self) -> NoReturn:
-        scene = Scene()
-        dummy_object = Object(id=123, name="dummy", position=Vector(0, 0), pushable=False)
-        scene.add_entity(dummy_object)
-
-        assert not CommonRequirements.is_pushable(scene, Vector(0, 0))
+    def test_no_object_failure(self) -> NoReturn:
+        assert not CommonRequirements.is_stackable(self.scene, Vector(1, 0), "dummy")
