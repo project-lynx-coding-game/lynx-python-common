@@ -6,14 +6,8 @@ from lynx.common.vector import Vector
 class CommonRequirements:
 
 	@staticmethod
-	def is_walkable(scene: 'Scene', object_id: int, movement: Vector) -> bool:
-		object: Object = scene.get_object_by_id(object_id)
-
-		if object is None:
-			return False
-
-		destination_position: Vector = object.position + movement
-		square_at_destination: Square = scene.get_square(destination_position)
+	def is_walkable(scene: 'Scene', position: Vector) -> bool:
+		square_at_destination: Square = scene.get_square(position)
 		return square_at_destination.walkable()
 
 	@staticmethod
@@ -30,3 +24,13 @@ class CommonRequirements:
 
 		distance = object.position.dist_to(position)
 		return distance <= max_distance
+        
+	@staticmethod
+	def is_stackable(scene: 'Scene', position: Vector, stack_object_name: str) -> bool:
+		objects_on_square = scene.get_objects_by_position(position)
+
+		for object in objects_on_square:
+			if object.name == stack_object_name:
+				return True
+
+		return False
