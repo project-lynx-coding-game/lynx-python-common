@@ -8,8 +8,8 @@ from lynx.common.vector import Vector
 
 
 class TestPushSerialization:
-    expected_serialized_push = '{"type": "Push", "attributes": "{\\"object_id\\": 123, \\"direction\\": {\\"x\\": -1, \\"y\\": 0}, ' \
-                               '\\"pushed_object_ids\\": [1, 2, 3]}"}'
+    expected_serialized_push = '{"type": "Push", "attributes": {"object_id": 123, "direction": {"x": -1, "y": 0}, ' \
+                               '"pushed_object_ids": [1, 2, 3]}}'
 
     def test_success(self) -> NoReturn:
         push = Push(object_id=123, direction=Direction.WEST.value)
@@ -29,15 +29,15 @@ class TestPushDeserialization:
     expected_deserialized_push.pushed_object_ids = [1, 2, 3]
 
     def test_success(self) -> NoReturn:
-        serialized_push = '{"type": "Push", "attributes": "{\\"object_id\\": 123, \\"direction\\": {\\"x\\": -1, \\"y\\": 0}, ' \
-                          '\\"pushed_object_ids\\": [1, 2, 3]}"}'
+        serialized_push = '{"type": "Push", "attributes": {"object_id": 123, "direction": {"x": -1, "y": 0}, ' \
+                          '"pushed_object_ids": [1, 2, 3]}}'
         deserialized_push = Push.deserialize(serialized_push)
 
         assert deserialized_push == self.expected_deserialized_push
 
     def test_failure(self) -> NoReturn:
-        serialized_push = '{"type": "Push", "attributes": "{\\"object_id\\": 456, \\"direction\\": {\\"x\\": 1, \\"y\\": 0}, ' \
-                          '\\"pushed_object_ids\\": [4, 5, 6]}"}'
+        serialized_push = '{"type": "Push", "attributes": {"object_id": 456, "direction": {"x": 1, "y": 0}, ' \
+                          '"pushed_object_ids": [4, 5, 6]}}'
         deserialized_push = Push.deserialize(serialized_push)
 
         assert deserialized_push != self.expected_deserialized_push

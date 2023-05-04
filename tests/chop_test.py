@@ -9,7 +9,7 @@ from lynx.common.vector import Vector
 import random
 
 class TestChopSerialization:
-	expected_serialization_chop = '{"type": "Chop", "attributes": "{\\"object_id\\": 1, \\"target_position\\": {\\"x\\": 2, \\"y\\": 2}}"}'
+	expected_serialization_chop = '{"type": "Chop", "attributes": {"object_id": 1, "target_position": {"x": 2, "y": 2}}}'
 
 	def test_success_serialization(self) -> NoReturn:
 		serialized_chop = Chop(object_id=1, target_position=Vector(2, 2)).serialize()
