@@ -28,9 +28,9 @@ class Entity(Serializable):
         from lynx.common.object import Object
         from lynx.common.actions.chop import Chop
         from lynx.common.actions.push import Push
+        from lynx.common.actions.message_log import MessageLog
         from lynx.common.actions.create_object import CreateObject
         from lynx.common.actions.remove_object import RemoveObject
-
 
         exported_entity = cls._Exported.deserialize(json_string)
         entity_type = locals()[exported_entity.type]
