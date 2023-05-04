@@ -1,4 +1,6 @@
 __pycache__/
+build/
+lynx_python_common.egg-info/
 *.py[cod]
 *$py.class
 .*

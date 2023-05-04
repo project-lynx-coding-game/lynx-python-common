@@ -56,7 +56,7 @@ class Serializable:
 
     @classmethod
     def deserialize(cls, json_data: Union[dict, str]) -> Serializable:
-        if json_data is str:
+        if isinstance(json_data, str):
             json_data = json.loads(json_data)
 
         # All serializable classes must have parameterless constructor
