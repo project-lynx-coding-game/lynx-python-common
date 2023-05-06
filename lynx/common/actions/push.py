@@ -22,7 +22,7 @@ class Push(Action):
         pushed_position = scene.get_object_by_id(self.object_id).position + self.direction
         objects_on_square = scene.get_objects_by_position(pushed_position)
 
-        for pushable_object in filter(lambda x: x.id in self.pushed_object_ids, objects_on_square):
+        for pushable_object in list(filter(lambda x: x.id in self.pushed_object_ids, objects_on_square)):
             Move(object_id=pushable_object.id, movement=self.direction).apply(scene)
 
     def satisfies_requirements(self, scene: 'Scene') -> bool:
@@ -30,7 +30,7 @@ class Push(Action):
         destination_position = pushed_position + self.direction
         objects_on_square = scene.get_objects_by_position(pushed_position)
 
-        for pushable_object in filter(lambda x: x.pushable, objects_on_square):
+        for pushable_object in list(filter(lambda x: x.pushable, objects_on_square)):
             if Req.is_walkable(scene, destination_position) or Req.is_stackable(scene, destination_position, pushable_object.name):
                 self.pushed_object_ids.append(pushable_object.id)
 
