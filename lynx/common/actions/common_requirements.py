@@ -24,13 +24,14 @@ class CommonRequirements:
 
 		distance = object.position.dist_to(position)
 		return distance <= max_distance
-        
+
+	# object can be stacked on a given position if an object with the same name is already there
 	@staticmethod
-	def is_stackable(scene: 'Scene', position: Vector, stack_object_name: str) -> bool:
+	def can_be_stacked(scene: 'Scene', position: Vector, object_name: str) -> bool:
 		objects_on_square = scene.get_objects_by_position(position)
 
 		for object in objects_on_square:
-			if object.name == stack_object_name:
+			if object.name == object_name:
 				return True
 
 		return False
