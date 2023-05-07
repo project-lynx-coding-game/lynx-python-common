@@ -87,24 +87,34 @@ class TestPushSatisfiesRequirements:
 class TestPushApply:
     def test_apply(self) -> NoReturn:
         expected_scene = Scene()
-        expected_pushable_object = Object(id=123, name="dummy", position=Vector(0, 1), pushable=True)
+        expected_pushable_object1 = Object(id=123, name="dummy", position=Vector(0, 1), pushable=True)
+        expected_pushable_object2 = Object(id=12, name="dummy", position=Vector(0, 1), pushable=True)
         expected_pusher_object = Object(id=456, name="dummy", position=Vector(2, 1))
         expected_dummy_action = Push(object_id=456, direction=Vector(-1, 0))
-        expected_dummy_action.pushed_object_ids = [123]
-        expected_scene.add_entity(expected_pushable_object)
+        expected_dummy_action.pushed_object_ids = [123, 12]
+        expected_scene.add_entity(expected_pushable_object1)
+        expected_scene.add_entity(expected_pushable_object2)
         expected_scene.add_entity(expected_pusher_object)
         expected_scene.add_entity(expected_dummy_action)
 
         scene = Scene()
-        pushable_object = Object(id=123, name="dummy", position=Vector(1, 1), pushable=True)
+        pushable_object1 = Object(id=123, name="dummy", position=Vector(1, 1), pushable=True)
+        pushable_object2 = Object(id=12, name="dummy", position=Vector(1, 1), pushable=True)
         pusher_object = Object(id=456, name="dummy", position=Vector(2, 1))
         dummy_action = Push(object_id=456, direction=Vector(-1, 0))
-        dummy_action.pushed_object_ids = [123]
-        scene.add_entity(pushable_object)
+        dummy_action.pushed_object_ids = [123, 12]
+        scene.add_entity(pushable_object1)
+        scene.add_entity(pushable_object2)
         scene.add_entity(pusher_object)
         scene.add_entity(dummy_action)
         dummy_action.apply(scene)
 
-        assert expected_pushable_object == pushable_object
-        assert scene.get_objects_by_position(Vector(0, 1)) == [pushable_object]
+        # check if two pushable objects on the square we are pushing have been pushed
+        assert expected_pushable_object1 == pushable_object1
+        assert expected_pushable_object2 == pushable_object2
+
+        # checks if two pushable objects are on the new square
+        assert scene.get_objects_by_position(Vector(0, 1)) == [pushable_object1, pushable_object2]
+
+        # checks if there are no objects left on the square we pushed
         assert scene.get_objects_by_position(Vector(1, 1)) == []

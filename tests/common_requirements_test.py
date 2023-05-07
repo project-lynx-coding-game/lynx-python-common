@@ -37,10 +37,10 @@ class TestIsStackable:
     scene.add_entity(dummy_object1)
 
     def test_success(self) -> NoReturn:
-        assert CommonRequirements.is_stackable(self.scene, Vector(0, 0), "dummy")
+        assert CommonRequirements.can_be_stacked(self.scene, Vector(0, 0), "dummy")
 
     def test_different_object_name_failure(self) -> NoReturn:
-        assert not CommonRequirements.is_stackable(self.scene, Vector(0, 0), "dummy123")
+        assert not CommonRequirements.can_be_stacked(self.scene, Vector(0, 0), "dummy123")
 
     def test_no_object_failure(self) -> NoReturn:
-        assert not CommonRequirements.is_stackable(self.scene, Vector(1, 0), "dummy")
+        assert not CommonRequirements.can_be_stacked(self.scene, Vector(1, 0), "dummy")
