@@ -46,7 +46,7 @@ class TestMoveRequirements:
     def test_success(self, mock_scene):
         dummy_action = Move(
             object_id=123,
-            direction=Vector(1, 1)
+            direction=Vector(1, 0)
         )
         walkable_square = Square()
         walkable_square.walkable = MagicMock(return_value=True)
@@ -62,13 +62,13 @@ class TestMoveApply:
         expected_scene = Scene()
         expected_dummy_object = Object(
             id=123, name="dummy", position=Vector(1, 1))
-        expected_dummy_action = Move(object_id=123, direction=Vector(1, 1))
+        expected_dummy_action = Move(object_id=123, direction=Vector(1, 0))
         expected_scene.add_entity(expected_dummy_object)
         expected_scene.add_entity(expected_dummy_action)
 
         scene = Scene()
-        dummy_object = Object(id=123, name="dummy", position=Vector(0, 0))
-        dummy_action = Move(object_id=123, direction=Vector(1, 1))
+        dummy_object = Object(id=123, name="dummy", position=Vector(0, 1))
+        dummy_action = Move(object_id=123, direction=Vector(1, 0))
         scene.add_entity(dummy_object)
         scene.add_entity(dummy_action)
         dummy_action.apply(scene)

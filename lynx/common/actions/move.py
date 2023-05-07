@@ -1,7 +1,8 @@
+from typing import NoReturn
 from dataclasses import dataclass
 
 from lynx.common.actions.action import Action
-from lynx.common.actions.common_requirements import CommonRequirements
+from lynx.common.actions.common_requirements import CommonRequirements as Req
 from lynx.common.object import Object
 from lynx.common.vector import Vector
 from lynx.common.enums import Direction
@@ -18,8 +19,8 @@ class Move(Action):
 
     def satisfies_requirements(self, scene: 'Scene') -> bool:
         destination_position = scene.get_object_by_id(self.object_id).position + self.direction
-        return CommonRequirements.is_walkable(scene, destination_position)
+        return Req.is_walkable(scene, destination_position) and Req.is_proper_direction(self.direction)
 
-    def apply(self, scene: 'Scene') -> None:
+    def apply(self, scene: 'Scene') -> NoReturn:
         object: Object = scene.get_object_by_id(self.object_id)
         scene.move_object(object, self.direction)

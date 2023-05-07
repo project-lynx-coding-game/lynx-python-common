@@ -1,6 +1,7 @@
 from lynx.common.object import Object
 from lynx.common.square import Square
 from lynx.common.vector import Vector
+from lynx.common.enums import Direction
 
 
 class CommonRequirements:
@@ -35,3 +36,11 @@ class CommonRequirements:
 				return True
 
 		return False
+
+	# TODO: Move, Push, Chop etc. should take argument of Direction type, not Vector type
+	# this means that serialization and deserialization have to be adapted to Enum
+	# when this is done, there is no need for this requirement
+	@staticmethod
+	def is_proper_direction(vector: Vector) -> bool:
+		direction_vectors = [Direction.NORTH.value, Direction.SOUTH.value, Direction.EAST.value, Direction.WEST.value]
+		return vector in direction_vectors
