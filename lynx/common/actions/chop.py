@@ -1,5 +1,6 @@
 from dataclasses import dataclass
 
+from build.lib.lynx.common.enums import Direction
 from lynx.common.actions.action import Action
 from lynx.common.actions.common_requirements import CommonRequirements
 from lynx.common.actions.create_object import CreateObject
@@ -15,7 +16,7 @@ class Chop(Action):
     """
     object_id: int = -1
     # target_position: Vector = Vector(1, 0) # Currently we want to chop the tree in specific direction
-    direction: Vector = Vector(1, 0)
+    direction: Vector = Direction.NORTH.value
 
     def apply(self, scene: 'Scene') -> None:
         target_position = self._get_target_position(scene)
@@ -31,10 +32,8 @@ class Chop(Action):
             scene.add_to_pending_actions(create_action.serialize())
 
     def satisfies_requirements(self, scene: 'Scene') -> bool:
-        return CommonRequirements.is_in_range(scene, self.object_id, self._get_target_position(scene),
-                                              1) and CommonRequirements.is_on_square(scene,
-                                                                                     self._get_target_position(scene),
-                                                                                     'Tree')
+        return CommonRequirements.is_in_range(scene, self.object_id, self._get_target_position(scene), 1) \
+            and CommonRequirements.is_on_square(scene, self._get_target_position(scene), 'Tree')
 
     def _get_target_position(self, scene: 'Scene') -> Vector:
         return scene.get_object_by_id(self.object_id).position + self.direction
