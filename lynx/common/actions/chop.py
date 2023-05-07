@@ -1,10 +1,10 @@
 from dataclasses import dataclass
 
-from build.lib.lynx.common.enums import Direction
 from lynx.common.actions.action import Action
 from lynx.common.actions.common_requirements import CommonRequirements
 from lynx.common.actions.create_object import CreateObject
 from lynx.common.actions.remove_object import RemoveObject
+from lynx.common.enums import Direction
 from lynx.common.object import Object
 from lynx.common.vector import Vector
 
@@ -22,10 +22,12 @@ class Chop(Action):
         target_position = self._get_target_position(scene)
         objects_on_square = scene.get_objects_by_position(target_position)
         # TODO put 'Tree' into an Enum
-        chopped_object: Object = list(filter(lambda object_on_square: object_on_square.name == 'Tree', objects_on_square))[0]
+        chopped_object: Object = \
+        list(filter(lambda object_on_square: object_on_square.name == 'Tree', objects_on_square))[0]
         if chopped_object:
             remove_action = RemoveObject(chopped_object.id)
-            log = Object(id=scene.generate_id(), name='Log', pushable=True, walkable=False, position=chopped_object.position,
+            log = Object(id=scene.generate_id(), name='Log', pushable=True, walkable=False,
+                         position=chopped_object.position,
                          pickable=True)
             create_action = CreateObject(log.serialize())
             scene.add_to_pending_actions(remove_action.serialize())
