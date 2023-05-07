@@ -28,4 +28,5 @@ class Square:
         self.objects.remove(object)
 
     def walkable(self) -> bool:
-        return self.ground != None
+        return self.ground != None and \
+            False not in [object_on_ground.walkable for object_on_ground in self.objects]
