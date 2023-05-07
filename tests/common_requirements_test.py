@@ -6,10 +6,10 @@ from lynx.common.square import Square
 from lynx.common.vector import Vector
 from lynx.common.object import Object
 from lynx.common.scene import Scene
+from lynx.common.enums import Direction
 
 
 class TestIsWalkable:
-
     @patch('lynx.common.scene.Scene')
     def test_success(self, mock_scene) -> NoReturn:
         mock_square_at_destination = Square()
@@ -31,7 +31,7 @@ class TestIsWalkable:
         assert not result
 
 
-class TestIsStackable:
+class TestCanBeStacked:
     scene = Scene()
     dummy_object1 = Object(id=123, name="dummy", position=Vector(0, 0))
     scene.add_entity(dummy_object1)
@@ -44,3 +44,14 @@ class TestIsStackable:
 
     def test_no_object_failure(self) -> NoReturn:
         assert not CommonRequirements.can_be_stacked(self.scene, Vector(1, 0), "dummy")
+
+
+class TestIsProperDirection:
+    def test_north_vector_proper(self) -> NoReturn:
+        assert CommonRequirements.is_proper_direction(Direction.NORTH.value)
+
+    def test_south_vector_proper(self) -> NoReturn:
+        assert CommonRequirements.is_proper_direction(Vector(0, -1))
+
+    def test_huge_vector_improper(self) -> NoReturn:
+        assert not CommonRequirements.is_proper_direction(Vector(100, 100))
