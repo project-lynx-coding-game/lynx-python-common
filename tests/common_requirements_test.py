@@ -55,3 +55,24 @@ class TestIsProperDirection:
 
     def test_huge_vector_improper(self) -> NoReturn:
         assert not CommonRequirements.is_proper_direction(Vector(100, 100))
+
+
+class TestContain_tags:
+    scene = Scene()
+    dummy_object1 = Object(id=123, name="dummy", position=Vector(0, 0), tags=['walkable', 'pushable'])
+    scene.add_entity(dummy_object1)
+
+    def test_success(self) -> NoReturn:
+        assert CommonRequirements.has_proper_tags(self.scene, 123, ['walkable'])
+
+    def test_fail(self) -> NoReturn:
+        assert not CommonRequirements.has_proper_tags(self.scene, 123, ['insertable'])
+
+    def test_multiple_success(self) -> NoReturn:
+        assert CommonRequirements.has_proper_tags(self.scene, 123, ['walkable', 'pushable'])
+
+    def test_multiple_fail(self) -> NoReturn:
+        assert not CommonRequirements.has_proper_tags(self.scene, 123, ['walkable', 'pushable', 'insertable'])
+
+    def test_multiple2_fail(self) -> NoReturn:
+        assert not CommonRequirements.has_proper_tags(self.scene, 123, ['walkable', 'insertable'])

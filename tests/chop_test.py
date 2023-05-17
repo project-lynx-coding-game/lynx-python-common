@@ -24,7 +24,7 @@ class TestChopApply:
         expected_dummy_object = Object(id=1, name="dummy", position=Vector(5, 5))
         expected_dummy_chop = Chop(direction=Vector(0, 1), object_id=1)
         expected_dummy_object2 = Object(id=expected_scene.generate_id(), name="Log", position=Vector(5, 6),
-                                        pickable=True,  pushable=True, walkable=False)
+                                        tags=['pushable', 'walkable', 'pickable'])
         expected_scene.add_entity(expected_dummy_object)
         expected_scene.add_entity(expected_dummy_chop)
         expected_scene.add_entity(expected_dummy_object2)

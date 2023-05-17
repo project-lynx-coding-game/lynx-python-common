@@ -46,9 +46,9 @@ class TestPushDeserialization:
 class TestPushSatisfiesRequirements:
     def test_square_walkable_satisfies(self) -> NoReturn:
         scene = Scene()
-        pushable_object = Object(id=123, name="dummy", position=Vector(1, 1), pushable=True)
+        pushable_object = Object(id=123, name="dummy", position=Vector(1, 1), tags=['pushable'])
         pusher_object = Object(id=456, name="dummy", position=Vector(2, 1))
-        walkable_object = Object(id=789, name="dummy123", position=Vector(0, 1), walkable=True)
+        walkable_object = Object(id=789, name="dummy123", position=Vector(0, 1), tags=['walkable'])
         dummy_action = Push(object_id=456, direction=Vector(-1, 0))
         scene.add_entity(pushable_object)
         scene.add_entity(pusher_object)
@@ -59,9 +59,9 @@ class TestPushSatisfiesRequirements:
 
     def test_square_not_walkable_taken_by_same_object_satisfies(self) -> NoReturn:
         scene = Scene()
-        pushable_object = Object(id=123, name="dummy", position=Vector(1, 1), pushable=True)
+        pushable_object = Object(id=123, name="dummy", position=Vector(1, 1), tags=['pushable'])
         pusher_object = Object(id=456, name="dummy", position=Vector(2, 1))
-        blocking_object = Object(id=789, name="dummy", position=Vector(0, 1), walkable=False)
+        blocking_object = Object(id=789, name="dummy", position=Vector(0, 1))
         dummy_action = Push(object_id=456, direction=Vector(-1, 0))
         scene.add_entity(pushable_object)
         scene.add_entity(pusher_object)
@@ -72,9 +72,9 @@ class TestPushSatisfiesRequirements:
 
     def test_square_not_walkable_taken_by_different_object_does_not_satisfy(self) -> NoReturn:
         scene = Scene()
-        pushable_object = Object(id=123, name="dummy", position=Vector(1, 1), pushable=True)
+        pushable_object = Object(id=123, name="dummy", position=Vector(1, 1), tags=['pushable'])
         pusher_object = Object(id=456, name="dummy", position=Vector(2, 1))
-        blocking_object = Object(id=789, name="dummy123", position=Vector(0, 1), walkable=False)
+        blocking_object = Object(id=789, name="dummy123", position=Vector(0, 1))
         dummy_action = Push(object_id=456, direction=Vector(-1, 0))
         scene.add_entity(pushable_object)
         scene.add_entity(pusher_object)
@@ -87,8 +87,8 @@ class TestPushSatisfiesRequirements:
 class TestPushApply:
     def test_apply(self) -> NoReturn:
         expected_scene = Scene()
-        expected_pushable_object1 = Object(id=123, name="dummy", position=Vector(0, 1), pushable=True)
-        expected_pushable_object2 = Object(id=12, name="dummy", position=Vector(0, 1), pushable=True)
+        expected_pushable_object1 = Object(id=123, name="dummy", position=Vector(0, 1), tags=['pushable'])
+        expected_pushable_object2 = Object(id=12, name="dummy", position=Vector(0, 1), tags=['pushable'])
         expected_pusher_object = Object(id=456, name="dummy", position=Vector(2, 1))
         expected_dummy_action = Push(object_id=456, direction=Vector(-1, 0))
         expected_dummy_action.pushed_object_ids = [123, 12]
@@ -98,8 +98,8 @@ class TestPushApply:
         expected_scene.add_entity(expected_dummy_action)
 
         scene = Scene()
-        pushable_object1 = Object(id=123, name="dummy", position=Vector(1, 1), pushable=True)
-        pushable_object2 = Object(id=12, name="dummy", position=Vector(1, 1), pushable=True)
+        pushable_object1 = Object(id=123, name="dummy", position=Vector(1, 1), tags=['pushable'])
+        pushable_object2 = Object(id=12, name="dummy", position=Vector(1, 1), tags=['pushable'])
         pusher_object = Object(id=456, name="dummy", position=Vector(2, 1))
         dummy_action = Push(object_id=456, direction=Vector(-1, 0))
         dummy_action.pushed_object_ids = [123, 12]

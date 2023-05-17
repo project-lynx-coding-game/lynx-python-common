@@ -22,7 +22,7 @@ class Push(Action):
         destination_position = pushed_position + self.direction  # position to which the object is being pushed
         objects_on_square = scene.get_objects_by_position(pushed_position)
 
-        for pushable_object in list(filter(lambda x: x.pushable, objects_on_square)):
+        for pushable_object in list(filter(lambda x: 'pushable' in x.tags, objects_on_square)):
             if Req.is_walkable(scene, destination_position) or Req.can_be_stacked(scene, destination_position, pushable_object.name):
                 self.pushed_object_ids.append(pushable_object.id)
 
