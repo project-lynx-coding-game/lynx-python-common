@@ -12,11 +12,11 @@ class Square:
 
     def append(self, object: Object) -> NoReturn:
         # We might rename the walkable property into sth like ground
-        if 'walkable' in object.tags and self.ground != None:
+        if object.has_tags(['walkable']) and self.ground != None:
             # In the future when we add logger we should log this event!
             raise Exception("Cannot put more than a one ground in a square!")
 
-        if 'walkable' in object.tags:
+        if object.has_tags(['walkable']):
             self.ground = object
 
         self.objects.append(object)

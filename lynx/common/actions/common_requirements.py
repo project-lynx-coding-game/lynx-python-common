@@ -1,8 +1,9 @@
+from typing import List
+
 from lynx.common.object import Object
 from lynx.common.square import Square
 from lynx.common.vector import Vector
 from lynx.common.enums import Direction
-from typing import List
 
 
 class CommonRequirements:
@@ -47,12 +48,10 @@ class CommonRequirements:
         return vector in direction_vectors
 
     @staticmethod
-    def has_proper_tags(scene: 'Scene', object_id: int, tag_names: List[str]) -> bool:
+    def has_given_tags(scene: 'Scene', object_id: int, given_tags: List[str]) -> bool:
         object: Object = scene.get_object_by_id(object_id)
-        if len(tag_names) > len(object.tags):
-            return False
 
-        if all(element in object.tags for element in tag_names):
+        if all(element in object.tags for element in given_tags):
             return True
 
         return False

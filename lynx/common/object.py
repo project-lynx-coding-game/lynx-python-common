@@ -22,4 +22,10 @@ class Object(Entity):
     on_death: str = ""
     owner: str = ""
     inventory: List[int] = field(default_factory=list)
-    tags: List[str] = field(default_factory=list)       # List of options/extensions, so we don't need to store pickable/pushable in a standalone variable
+    tags: List[str] = field(default_factory=list)
+
+    def has_tags(self, given_tags: List[str]):
+        if all(element in self.tags for element in given_tags):
+            return True
+
+        return False
