@@ -22,8 +22,10 @@ class Chop(Action):
         target_position = self._get_target_position(scene)
         objects_on_square = scene.get_objects_by_position(target_position)
         # TODO put 'Tree' into an Enum
-        chopped_object: Object = list(filter(lambda object_on_square: object_on_square.name == 'Tree',
-                                             objects_on_square))[0]
+        # chopped_object: Object = list(filter(lambda object_on_square: object_on_square.name == 'Tree',
+        #                                      objects_on_square))[0]
+        chopped_object_iterator = iter(list(filter(lambda object_on_square: object_on_square.name == 'Tree', objects_on_square)))
+        chopped_object = next(chopped_object_iterator, None)
         if chopped_object:
             remove_action = RemoveObject(chopped_object.id)
             log = Object(id=scene.generate_id(), name='Log', tags=['pushable', 'walkable', 'pickable'],

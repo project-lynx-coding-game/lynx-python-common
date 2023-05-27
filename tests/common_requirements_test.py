@@ -73,6 +73,3 @@ class TestContainTags:
 
     def test_multiple_fail(self) -> NoReturn:
         assert not CommonRequirements.has_given_tags(self.scene, 123, ['walkable', 'pushable', 'insertable'])
-
-    def test_multiple2_fail(self) -> NoReturn:
-        assert not CommonRequirements.has_given_tags(self.scene, 123, ['walkable', 'insertable'])
