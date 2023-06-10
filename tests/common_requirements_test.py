@@ -62,14 +62,14 @@ class TestContainTags:
     dummy_object1 = Object(id=123, name="dummy", position=Vector(0, 0), tags=['walkable', 'pushable'])
     scene.add_entity(dummy_object1)
 
-    def test_single_success(self) -> NoReturn:
+    def test_has_proper_tag_positive(self) -> NoReturn:
         assert CommonRequirements.has_given_tags(self.scene, 123, ['walkable'])
 
-    def test_single_fail(self) -> NoReturn:
+    def test_has_improper_tag_negative(self) -> NoReturn:
         assert not CommonRequirements.has_given_tags(self.scene, 123, ['insertable'])
 
-    def test_multiple_success(self) -> NoReturn:
+    def test_has_proper_tags_positive(self) -> NoReturn:
         assert CommonRequirements.has_given_tags(self.scene, 123, ['walkable', 'pushable'])
 
-    def test_multiple_fail(self) -> NoReturn:
+    def test_has_improper_tags_negative(self) -> NoReturn:
         assert not CommonRequirements.has_given_tags(self.scene, 123, ['walkable', 'pushable', 'insertable'])
