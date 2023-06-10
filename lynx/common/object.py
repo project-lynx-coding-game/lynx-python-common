@@ -21,7 +21,6 @@ class Object(Entity):
     tick: str = ""
     on_death: str = ""
     owner: str = ""
-    inventory: List[int] = field(default_factory=list)
     tags: List[str] = field(default_factory=list)
 
     def has_tags(self, given_tags: List[str]):
