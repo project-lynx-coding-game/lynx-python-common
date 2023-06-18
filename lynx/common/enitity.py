@@ -24,6 +24,7 @@ class Entity(Serializable):
         from lynx.common.actions.move import Move
         from lynx.common.object import Object
         from lynx.common.actions.destroy_actions.chop import Chop
+        from lynx.common.actions.destroy_actions.mine import Mine
         from lynx.common.actions.push import Push
         from lynx.common.actions.message_log import MessageLog
         from lynx.common.actions.create_object import CreateObject
