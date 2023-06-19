@@ -18,9 +18,13 @@ class Object(Entity):
     position: Vector = Vector(0, 0)
     additional_positions: List[Vector] = field(default_factory=list) 
     state: str = ""
-    walkable: bool = False
     tick: str = ""
     on_death: str = ""
     owner: str = ""
-    pickable: bool = False
-    pushable: bool = False
+    tags: List[str] = field(default_factory=list)
+
+    def has_tags(self, given_tags: List[str]):
+        if all(element in self.tags for element in given_tags):
+            return True
+
+        return False

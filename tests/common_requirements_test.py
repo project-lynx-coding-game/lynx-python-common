@@ -55,3 +55,34 @@ class TestIsProperDirection:
 
     def test_huge_vector_improper(self) -> NoReturn:
         assert not CommonRequirements.is_proper_direction(Vector(100, 100))
+
+
+class TestContainTags:
+    scene = Scene()
+    dummy_object1 = Object(id=123, name="dummy", position=Vector(0, 0), tags=['walkable', 'pushable'])
+    scene.add_entity(dummy_object1)
+
+    def test_has_proper_tag_positive(self) -> NoReturn:
+        assert CommonRequirements.has_given_tags(self.scene, 123, ['walkable'])
+
+    def test_has_improper_tag_negative(self) -> NoReturn:
+        assert not CommonRequirements.has_given_tags(self.scene, 123, ['insertable'])
+
+    def test_has_proper_tags_positive(self) -> NoReturn:
+        assert CommonRequirements.has_given_tags(self.scene, 123, ['walkable', 'pushable'])
+
+    def test_has_improper_tags_negative(self) -> NoReturn:
+        assert not CommonRequirements.has_given_tags(self.scene, 123, ['walkable', 'pushable', 'insertable'])
+
+class TestIsAnyOnSquare:
+    scene = Scene()
+    dummy_object1 = Object(id=123, name="dummy", position=Vector(0, 0))
+    scene.add_entity(dummy_object1)
+    dummy_object2 = Object(id=1234, name="tree", position=Vector(0, 0))
+    scene.add_entity(dummy_object2)
+
+    def test_existing_tree_on_square_positive(self) -> NoReturn:
+        assert CommonRequirements.is_any_on_square(self.scene, Vector(0, 0), ['tree'])
+
+    def test_nonexistent_object_on_square_negative(self) -> NoReturn:
+        assert not CommonRequirements.is_any_on_square(self.scene, Vector(0, 0), ['test'])

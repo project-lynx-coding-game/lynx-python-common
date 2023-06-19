@@ -9,8 +9,8 @@ from lynx.common.vector import Vector
 
 class TestSceneSerialization:
     expected_serialized_scene = '{"entities": [{"type": "Object", "attributes": {"id": 123, "name": "dummy", "position": {"x": ' \
-                                '0, "y": 0}, "additional_positions": [], "state": "", "walkable": false, "tick": "", ' \
-                                '"on_death": "", "owner": "", "pickable": false, "pushable": false}}, {"type": "Move", "attributes": {"object_id": 456, ' \
+                                '0, "y": 0}, "additional_positions": [], "state": "", "tick": "", ' \
+                                '"on_death": "", "owner": "", "tags": []}}, {"type": "Move", "attributes": {"object_id": 456, ' \
                                 '"direction": {"x": 1, "y": 0}}}], "pending_actions": []}'
 
     def test_success(self) -> NoReturn:
@@ -44,7 +44,7 @@ class TestSceneDeserialization:
 
     def test_success(self) -> NoReturn:
         serialized_scene = '{"entities": [{"type": "Object", "attributes": {"id": 123, "name": "dummy", "position": {"x": 0, "y": 0}, ' \
-                           '"additional_positions": [], "state": "", "walkable": false, "tick": "", "on_death": "", "owner": ""}}, {"type": "Move", ' \
+                           '"additional_positions": [], "state": "", "tick": "", "on_death": "", "owner": "", "tags": []}}, {"type": "Move", ' \
                            '"attributes": {"object_id": 456, "direction": {"x": 1, "y": 0}}}]} '
         deserialzied_scene = Scene.deserialize(json.loads(serialized_scene))
 
@@ -52,7 +52,7 @@ class TestSceneDeserialization:
 
     def test_failure(self) -> NoReturn:
         serialized_scene = '{"entities": [{"type": "Object", "attributes": {"id": 789, "name": "dummy", "position": {"x": 0, "y": 0}, ' \
-                           '"additional_positions": [], "state": "", "walkable": false, "tick": "", "on_death": "", "owner": ""}}, {"type": "Move", ' \
+                           '"additional_positions": [], "state": "", "tick": "", "on_death": "", "owner": "", "tags": []}}, {"type": "Move", ' \
                            '"attributes": {"object_id": 1011, "direction": {"x": 1, "y": 0}}}]} '
         deserialzied_scene = Scene.deserialize(json.loads(serialized_scene))
 

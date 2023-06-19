@@ -2,14 +2,14 @@ import random
 from typing import NoReturn
 
 from lynx.common.actions.action import Action
-from lynx.common.actions.chop import Chop
+from lynx.common.actions.destroy_actions.chop import Chop
 from lynx.common.object import Object
 from lynx.common.scene import Scene
 from lynx.common.vector import Vector
 
 
 class TestChopSerialization:
-    expected_serialization_chop = '{"type": "Chop", "attributes": {"object_id": 1, "direction": {"x": 1, "y": 0}}}'
+    expected_serialization_chop = '{"type": "Chop", "attributes": {"object_id": 1, "direction": {"x": 1, "y": 0}, "_object_to_drop_after_destruction": {"Tree": "Log"}}}'
 
     def test_success_serialization(self) -> NoReturn:
         serialized_chop = Chop(object_id=1, direction=Vector(1, 0)).serialize()
@@ -24,7 +24,7 @@ class TestChopApply:
         expected_dummy_object = Object(id=1, name="dummy", position=Vector(5, 5))
         expected_dummy_chop = Chop(direction=Vector(0, 1), object_id=1)
         expected_dummy_object2 = Object(id=expected_scene.generate_id(), name="Log", position=Vector(5, 6),
-                                        pickable=True,  pushable=True, walkable=False)
+                                        tags=['pushable', 'pickable'])
         expected_scene.add_entity(expected_dummy_object)
         expected_scene.add_entity(expected_dummy_chop)
         expected_scene.add_entity(expected_dummy_object2)

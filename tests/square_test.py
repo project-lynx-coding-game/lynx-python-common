@@ -6,7 +6,7 @@ from lynx.common.square import Square
 
 class TestSquareAppend:
     def test_object_success(self):
-        object = Object(name="Ondrej", walkable=False)
+        object = Object(name="Ondrej")
         square = Square()
         square.append(object)
 
@@ -14,7 +14,7 @@ class TestSquareAppend:
         assert square.ground is None
 
     def test_ground_success(self):
-        object = Object(name="Ondrej", walkable=True)
+        object = Object(name="Ondrej", tags=['walkable'])
         square = Square()
         square.append(object)
 
@@ -22,8 +22,8 @@ class TestSquareAppend:
         assert square.ground == object
 
     def test_object_ground_success(self):
-        object = Object(name="Ondrej", walkable=False)
-        ground = Object(name="Groundriej", walkable=True)
+        object = Object(name="Ondrej")
+        ground = Object(name="Groundriej", tags=['walkable'])
         square = Square()
         square.append(object)
         square.append(ground)
@@ -32,8 +32,8 @@ class TestSquareAppend:
         assert square.ground == ground
 
     def test_ground_failure(self):
-        object = Object(name="Ondrej", walkable=True)
-        ground = Object(name="Groundriej", walkable=True)
+        object = Object(name="Ondrej", tags=['walkable'])
+        ground = Object(name="Groundriej", tags=['walkable'])
         square = Square()
         square.append(object)
 
@@ -43,7 +43,7 @@ class TestSquareAppend:
 
 class TestSquareRemove:
     def test_object_success(self):
-        object = Object(name="Ondrej", walkable=False)
+        object = Object(name="Ondrej")
         square = Square()
         square.append(object)
         square.remove(object)
@@ -52,8 +52,8 @@ class TestSquareRemove:
         assert square.ground is None
 
     def test_ground_success(self):
-        object = Object(name="Ondrej", walkable=False)
-        ground = Object(name="Groundriej", walkable=True)
+        object = Object(name="Ondrej")
+        ground = Object(name="Groundriej", tags=['walkable'])
         square = Square()
         square.append(object)
         square.append(ground)
@@ -63,8 +63,8 @@ class TestSquareRemove:
         assert square.ground is None
 
     def test_ground_failure(self):
-        object = Object(name="Ondrej", walkable=False)
-        object2 = Object(name="Undriej", walkable=False)
+        object = Object(name="Ondrej")
+        object2 = Object(name="Undriej")
         square = Square()
         square.append(object)
 
