@@ -16,7 +16,6 @@ class DestroyAround(Action):
     Simple action used to hit/destroy object, which stands on the given destination.
     """
     object_id: int = -1
-    # target_position: Vector = Vector(1, 0) # Currently we want to chop the tree in specific direction
     direction: Vector = Direction.NORTH.value
     # Dictionary, which has object name and what it will drop e.g. "
     _object_to_drop_after_destroyment: Dict[int, str] = field(default_factory=dict)
