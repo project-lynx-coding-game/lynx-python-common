@@ -17,21 +17,20 @@ class DestroyAround(Action):
     """
     object_id: int = -1
     direction: Vector = Direction.NORTH.value
-    # Dictionary, which has object name and what it will drop e.g. "
+    # Dictionary, which has object name and what it will drop e.g. Log for trees, stone for Rock"
     _object_to_drop_after_destroyment: Dict[int, str] = field(default_factory=dict)
 
 
     def apply(self, scene: 'Scene') -> None:
         target_position = self._get_target_position(scene)
         objects_on_square = scene.get_objects_by_position(target_position)
-        x = self._object_to_drop_after_destroyment.keys
         destroyed_object_iterator = iter(list(filter(lambda object_on_square: object_on_square.name in self._object_to_drop_after_destroyment.keys(), objects_on_square)))
         destroyed_object = next(destroyed_object_iterator, None)
         if destroyed_object:
             remove_action = RemoveObject(destroyed_object.id)
-            log = Object(id=scene.generate_id(), name= self._object_to_drop_after_destroyment[destroyed_object.name], tags=['pushable', 'pickable'],
+            object_created = Object(id=scene.generate_id(), name= self._object_to_drop_after_destroyment[destroyed_object.name], tags=['pushable', 'pickable'],
                          position=destroyed_object.position)
-            create_action = CreateObject(log.serialize())
+            create_action = CreateObject(object_created.serialize())
             scene.add_to_pending_actions(remove_action.serialize())
             scene.add_to_pending_actions(create_action.serialize())
 
