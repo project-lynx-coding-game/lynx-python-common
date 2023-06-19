@@ -11,7 +11,7 @@ from lynx.common.vector import Vector
 
 
 @dataclass
-class Destroy_around(Action):
+class DestroyAround(Action):
     """
     Simple action used to hit/destroy object, which stands on the given destination.
     """
