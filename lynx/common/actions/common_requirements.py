@@ -19,6 +19,12 @@ class CommonRequirements:
         return name in [object.name for object in objects_on_square]
 
     @staticmethod
+    def is_any_on_square(scene: 'Scene', position: Vector, wanted_names: List[str]) -> bool:
+        objects_on_square = scene.get_objects_by_position(position)
+        objects_on_square_names = [object.name for object in objects_on_square]
+        return any(name in objects_on_square_names for name in wanted_names)
+
+    @staticmethod
     def is_in_range(scene: 'Scene', object_id: int, position: Vector, max_distance: int) -> bool:
         object: Object = scene.get_object_by_id(object_id)
 
