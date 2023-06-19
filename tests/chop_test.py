@@ -2,7 +2,7 @@ import random
 from typing import NoReturn
 
 from lynx.common.actions.action import Action
-from lynx.common.actions.destroy_actions.chop import Chop
+from lynx.common.actions.chop import Chop
 from lynx.common.object import Object
 from lynx.common.scene import Scene
 from lynx.common.vector import Vector
