@@ -18,17 +18,17 @@ class DestroyAround(Action):
     object_id: int = -1
     direction: Vector = Direction.NORTH.value
     # Dictionary, which has object name and what it will drop e.g. Log for trees, stone for Rock"
-    _object_to_drop_after_destroyment: Dict[int, str] = field(default_factory=dict)
+    _object_to_drop_after_destruction: Dict[int, str] = field(default_factory=dict)
 
 
     def apply(self, scene: 'Scene') -> None:
         target_position = self._get_target_position(scene)
         objects_on_square = scene.get_objects_by_position(target_position)
-        destroyed_object_iterator = iter(list(filter(lambda object_on_square: object_on_square.name in self._object_to_drop_after_destroyment.keys(), objects_on_square)))
+        destroyed_object_iterator = iter(list(filter(lambda object_on_square: object_on_square.name in self._object_to_drop_after_destruction.keys(), objects_on_square)))
         destroyed_object = next(destroyed_object_iterator, None)
         if destroyed_object:
             remove_action = RemoveObject(destroyed_object.id)
-            object_created = Object(id=scene.generate_id(), name= self._object_to_drop_after_destroyment[destroyed_object.name], tags=['pushable', 'pickable'],
+            object_created = Object(id=scene.generate_id(), name= self._object_to_drop_after_destruction[destroyed_object.name], tags=['pushable', 'pickable'],
                          position=destroyed_object.position)
             create_action = CreateObject(object_created.serialize())
             scene.add_to_pending_actions(remove_action.serialize())
@@ -36,7 +36,7 @@ class DestroyAround(Action):
 
     def satisfies_requirements(self, scene: 'Scene') -> bool:
         return CommonRequirements.is_in_range(scene, self.object_id, self._get_target_position(scene), 1) \
-               and CommonRequirements.is_any_on_square(scene, self._get_target_position(scene), self._object_to_drop_after_destroyment.keys())
+               and CommonRequirements.is_any_on_square(scene, self._get_target_position(scene), self._object_to_drop_after_destruction.keys())
 
     def _get_target_position(self, scene: 'Scene') -> Vector:
         return scene.get_object_by_id(self.object_id).position + self.direction
