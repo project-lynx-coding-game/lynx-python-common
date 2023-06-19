@@ -1,7 +1,7 @@
 from dataclasses import dataclass, field
 from typing import Dict
 
-from lynx.common.actions.destroy_actions.destroy_around import DestroyAround
+from lynx.common.actions.destroy_around import DestroyAround
 
 
 @dataclass

@@ -23,8 +23,8 @@ class Entity(Serializable):
         # TODO: simplify following imports
         from lynx.common.actions.move import Move
         from lynx.common.object import Object
-        from lynx.common.actions.destroy_actions.chop import Chop
-        from lynx.common.actions.destroy_actions.mine import Mine
+        from lynx.common.actions.chop import Chop
+        from lynx.common.actions.mine import Mine
         from lynx.common.actions.push import Push
         from lynx.common.actions.message_log import MessageLog
         from lynx.common.actions.error_log import ErrorLog
