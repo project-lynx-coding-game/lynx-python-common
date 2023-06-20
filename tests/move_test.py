@@ -11,7 +11,7 @@ from lynx.common.vector import Vector
 
 
 class TestMoveSerialization:
-    expected_serialized_move = '{"type": "Move", "attributes": {"object_id": 123, "direction": {"x": 0, "y": 1}}}'
+    expected_serialized_move = '{"type": "Move", "attributes": {"object_id": 123, "direction": {"x": 0, "y": -1}}}'
 
     def test_success(self) -> NoReturn:
         serialized_move = Move(
@@ -29,7 +29,7 @@ class TestMoveDeserialization:
         object_id=123, direction=Direction.NORTH.value)
 
     def test_success(self) -> NoReturn:
-        serialized_move = '{"type": "Move", "attributes": {"object_id": 123, "direction": {"x": 0, "y": 1}}}'
+        serialized_move = '{"type": "Move", "attributes": {"object_id": 123, "direction": {"x": 0, "y": -1}}}'
         deserialized_move = Move.deserialize(json.loads(serialized_move))
 
         assert deserialized_move == self.expected_deserialized_move
