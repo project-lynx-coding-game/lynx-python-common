@@ -6,4 +6,4 @@ from lynx.common.actions.destroy_around import DestroyAround
 
 @dataclass
 class Chop(DestroyAround):
-    _object_to_drop_after_destruction: Dict[str, str] = field(default_factory=lambda: {"Tree": "Log"})
+    _object_to_drop_after_destruction: Dict[str, str] = field(default_factory=lambda: {"Tree": "Wood"})

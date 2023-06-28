@@ -9,7 +9,7 @@ from lynx.common.vector import Vector
 
 
 class TestChopSerialization:
-    expected_serialization_chop = '{"type": "Chop", "attributes": {"object_id": 1, "direction": {"x": 1, "y": 0}, "_object_to_drop_after_destruction": {"Tree": "Log"}}}'
+    expected_serialization_chop = '{"type": "Chop", "attributes": {"object_id": 1, "direction": {"x": 1, "y": 0}, "_object_to_drop_after_destruction": {"Tree": "Wood"}}}'
 
     def test_success_serialization(self) -> NoReturn:
         serialized_chop = Chop(object_id=1, direction=Vector(1, 0)).serialize()
@@ -23,7 +23,7 @@ class TestChopApply:
         expected_scene = Scene()
         expected_dummy_object = Object(id=1, name="dummy", position=Vector(5, 5))
         expected_dummy_chop = Chop(direction=Vector(0, 1), object_id=1)
-        expected_dummy_object2 = Object(id=expected_scene.generate_id(), name="Log", position=Vector(5, 6),
+        expected_dummy_object2 = Object(id=expected_scene.generate_id(), name="Wood", position=Vector(5, 6),
                                         tags=['pushable', 'pickable'])
         expected_scene.add_entity(expected_dummy_object)
         expected_scene.add_entity(expected_dummy_chop)

@@ -17,7 +17,7 @@ class DestroyAround(Action):
     """
     object_id: int = -1
     direction: Vector = Direction.NORTH.value
-    # Dictionary, which has object name and what it will drop e.g. Log for trees, stone for Rock"
+    # Dictionary, which has object name and what it will drop e.g. Wood for trees, stone for Rock
     _object_to_drop_after_destruction: Dict[int, str] = field(default_factory=dict)
 
 
