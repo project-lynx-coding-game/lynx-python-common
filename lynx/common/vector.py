@@ -30,3 +30,8 @@ class Vector(Serializable):
         # Euclidean distance from `self` to `point`
         dist: float = math.sqrt((self.x - point.x)**2 + (self.y - point.y)**2)
         return dist
+
+    def manhattan_distance(self, point) -> float:
+        dist: float = abs(self.x - point.x) + abs(self.y - point.y)
+        return dist
+    
