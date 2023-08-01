@@ -32,12 +32,12 @@ def distance_to(scene: 'Scene', object_id: int, agent_id: int) -> int:
     return scene.get_object_by_id(agent_id).position.manhattan_distance(scene.get_object_by_id(object_id).position)
 
 
-def fillter_objects(scene: 'Scene', object_ids: List[int], object_type: str) -> List[int]:
-    filltered_objects: List[int] = []
+def filter_objects(scene: 'Scene', object_ids: List[int], object_type: str) -> List[int]:
+    filtered_objects: List[int] = []
     for object_id in object_ids:
         if scene.get_object_by_id(object_id).name == object_type:
-            filltered_objects.append(object_id)
-    return filltered_objects
+            filtered_objects.append(object_id)
+    return filtered_objects
 
 
 def random_direction(scene: 'Scene', object_id: int) -> Vector:

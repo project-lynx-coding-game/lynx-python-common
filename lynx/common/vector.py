@@ -34,4 +34,3 @@ class Vector(Serializable):
     def manhattan_distance(self, point) -> float:
         dist: float = abs(self.x - point.x) + abs(self.y - point.y)
         return dist
-    

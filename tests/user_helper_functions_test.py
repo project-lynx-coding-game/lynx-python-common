@@ -4,7 +4,7 @@ from typing import List
 from lynx.common.object import Object
 from lynx.common.scene import Scene
 from lynx.common.vector import Vector
-from lynx.common.actions.user_helper_functions import objects_around, get_position, can_i_stand, get_type, distance_to, fillter_objects, random_direction
+from lynx.common.actions.user_helper_functions import objects_around, get_position, can_i_stand, get_type, distance_to, filter_objects, random_direction
 
 
 class TestUserHelperFunctions:
@@ -59,15 +59,15 @@ class TestUserHelperFunctions:
 
         assert distance == distance_to(self.scene, 4, 1)
 
-    def test_fillter_objects_success(self):
+    def test_filter_objects_success(self):
         selected_ids: List[int] = [2, 3]
 
-        assert selected_ids == fillter_objects(self.scene, [1,2,3,4], 'dummy')
+        assert selected_ids == filter_objects(self.scene, [1,2,3,4], 'dummy')
 
-    def test_fillter_objects_failure(self):
+    def test_filter_objects_failure(self):
         selected_ids: List[int] = [1]
 
-        assert selected_ids != fillter_objects(self.scene, [1, 2, 3, 4], 'empty')
+        assert selected_ids != filter_objects(self.scene, [1, 2, 3, 4], 'empty')
 
 
     def test_random_direction_success(self):
