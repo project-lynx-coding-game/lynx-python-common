@@ -29,10 +29,10 @@ class TestUserHelperFunctions:
         assert get_position(self.scene, 3) == Vector(3, 5)
 
     def test_can_i_stand_success(self) -> NoReturn:
-        assert can_i_stand(self.scene, Vector(5, 5))
+        assert can_i_stand(self.scene, Vector(5, 5)) is True
 
     def test_can_i_stand_failure(self) -> NoReturn:
-        assert not can_i_stand(self.scene, Vector(3, 5))
+        assert can_i_stand(self.scene, Vector(3, 5)) is False
 
     def test_get_type_success(self) -> NoReturn:
         assert get_type(self.scene, 1) == "agent"
