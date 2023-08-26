@@ -9,6 +9,7 @@ class Print(Action):
     Simple action for printing player's message
     """
     text: str = ""
+    user_id: str = ""
 
     def satisfies_requirements(self, scene: 'Scene') -> bool:
         return True
