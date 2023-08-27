@@ -86,3 +86,17 @@ class TestIsAnyOnSquare:
 
     def test_nonexistent_object_on_square_negative(self) -> NoReturn:
         assert not CommonRequirements.is_any_on_square(self.scene, Vector(0, 0), ['test'])
+
+
+class TestIsAnyTagOnSquare:
+    scene = Scene()
+    dummy_object1 = Object(id=123, name="dummy", position=Vector(0, 0), tags=['walkable', 'pushable'])
+    dummy_object2 = Object(id=1233, name="dummy", position=Vector(0, 1), tags=['walkable'])
+    scene.add_entity(dummy_object1)
+    scene.add_entity(dummy_object2)
+
+    def test_existing_tag_on_square_postive(self) -> NoReturn:
+        assert CommonRequirements.any_object_has_given_tags_on_squere(self.scene, Vector(0, 0), ['pushable'])
+
+    def test_existing_tag_on_square_negative(self) -> NoReturn:
+        assert not CommonRequirements.any_object_has_given_tags_on_squere(self.scene, Vector(0, 1), ['pushable'])

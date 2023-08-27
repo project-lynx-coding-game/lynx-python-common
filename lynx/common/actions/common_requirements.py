@@ -4,7 +4,7 @@ from lynx.common.object import Object
 from lynx.common.square import Square
 from lynx.common.vector import Vector
 from lynx.common.enums import Direction
-
+from lynx.common.scene import Scene
 
 class CommonRequirements:
 
@@ -61,3 +61,12 @@ class CommonRequirements:
             return True
 
         return False
+
+    @staticmethod
+    def any_object_has_given_tags_on_squere(scene: Scene, position: Vector, given_tags: List[str]) -> bool:
+        objects: List[Object] = scene.get_objects_by_position(position)
+        for object in objects:
+            if all(element in object.tags for element in given_tags):
+                return True
+        return False
+

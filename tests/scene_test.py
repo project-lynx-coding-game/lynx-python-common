@@ -8,11 +8,11 @@ from lynx.common.vector import Vector
 
 
 class TestSceneSerialization:
-    expected_serialized_scene = '{"players": [], "entities": [{"type": "Object", "attributes": {"id": 123, "name": "dummy", "position": {"x": ' \
-                                '0, "y": 0}, "additional_positions": [], "state": "", "tick": "", ' \
-                                '"on_death": "", "owner": "", "tags": []}}, {"type": "Move", "attributes": {"object_id": 456, ' \
-                                '"direction": {"x": 1, "y": 0}}}], "pending_actions": []}'
-
+    expected_serialized_scene = '{"players": [], entities": [{"type": "Object", "attributes": {"id": 123, "name": "dummy", ' \
+                                '"position": {"x": 0, "y": 0}, "additional_positions": [], "state": "", ' \
+                                '"tick": "", "on_death": "", "owner": "", "tags": [], "inventory": {}}}, ' \
+                                '{"type": "Move", "attributes": {"object_id": 456, "direction": {"x": 1, "y": ' \
+                                '0}}}], "pending_actions": []}'
     def test_success(self) -> NoReturn:
         scene = Scene()
 
