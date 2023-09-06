@@ -4,11 +4,13 @@ from lynx.common.square import Square
 from lynx.common.object import *
 from lynx.common.serializable import Serializable
 from lynx.common.vector import Vector
+from lynx.common.actions.create_object import CreateObject
 import random
 
 
 @dataclass
 class Scene(Serializable):
+    players: List[str] = field(default_factory=list)
     entities: List[Entity] = field(default_factory=list)
     pending_actions: List[str] = field(default_factory=list)  # Transformations which occur, during other transformations (e.g. chop -> Create logs)
     _square_position_map: Dict[Vector, Square] = field(default_factory=dict)
@@ -63,3 +65,26 @@ class Scene(Serializable):
 
     def add_to_pending_actions(self, action: str) -> NoReturn:
         self.pending_actions.append(action)
+
+    def is_player_new(self, player: str) -> bool:
+        return player not in self.players
+
+    def add_player(self, player: str) -> None:
+        self.players.append(player)
+
+    def is_world_created(self) -> bool:
+        return bool(self.entities)
+
+    def get_walkable_positions(self) -> List[Vector]:
+        walkable_positions = []
+        for position in self._square_position_map.keys():
+            if self._square_position_map[position].walkable():
+                walkable_positions.append(position)
+        return walkable_positions
+
+    def generate_drop_area(self, player: str) -> None:
+        walkable_positions = self.get_walkable_positions()
+        position = random.choice(walkable_positions)
+        drop_area = Object(name="DropArea", id=self.generate_id(), position=position, owner=player)
+        create_drop_area = CreateObject(drop_area.serialize())
+        self.add_to_pending_actions(create_drop_area.serialize())
