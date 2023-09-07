@@ -12,7 +12,8 @@ from lynx.common.vector import Vector
 @dataclass
 class Take(Action):
     """
-    Simple action used to hit/destroy object, which stands on the given destination.
+    Simple action for picking up objects, which can be picked up (pickable tag).
+    After picking up, our inventory is updated for the amount of objects, which we picked. 
     """
     object_id: int = -1
     position: Vector = Vector(0, 1)
