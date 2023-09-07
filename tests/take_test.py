@@ -14,14 +14,11 @@ class TestTakeSerialization:
 
     def test_success_serialization(self) -> NoReturn:
         serialized_take = Take(object_id=1, position=Vector(1, 0)).serialize()
-
         assert self.expected_serialization_take == serialized_take
 
     def test_success_deserialization(self):
         expected_take = Take(object_id=1, position=Vector(1, 0))
-
         deserialized_take = Entity.deserialize(self.expected_serialization_take)
-
         assert expected_take == deserialized_take
 
 
@@ -49,7 +46,7 @@ class TestTakeApply:
         assert expected_dummy_object == dummy_object
         assert scene.get_objects_by_position(Vector(5, 6)) == []
 
-    def test_apply__positive(self):
+    def test_take_only_wood_from_square_with_multiple_objects_positive(self):
         expected_scene = Scene()
         expected_dummy_object = Object(id=1, name="dummy", position=Vector(5, 5), inventory={"Wood": 1})
         dummy_expected_tree = Object(id=3, name="Tree", position=Vector(5, 6))
@@ -77,7 +74,7 @@ class TestTakeApply:
 
 
 class TestTakeRequirements:
-    def test_requirements_positive(self):
+    def test_all_requirements_satisifed_positive(self):
         scene = Scene()
         dummy_object = Object(id=1, name="dummy", position=Vector(5, 5))
         dummy_wood = Object(id=2, name="Wood", position=Vector(5, 6), tags=["pickable"])
@@ -89,7 +86,7 @@ class TestTakeRequirements:
 
         assert dummy_take.satisfies_requirements(scene)
 
-    def test_requirements_too_far_fail(self):
+    def test_take_single_wood_from_square_positive(self):
         scene = Scene()
         dummy_object = Object(id=1, name="dummy", position=Vector(5, 5))
         dummy_wood = Object(id=2, name="Wood", position=Vector(5, 6), tags=["pickable"])

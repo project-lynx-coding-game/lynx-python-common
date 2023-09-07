@@ -29,4 +29,4 @@ class Take(Action):
 
     def satisfies_requirements(self, scene: 'Scene') -> bool:
         return CommonRequirements.is_in_range(scene, self.object_id, self.position, 1) \
-               and CommonRequirements.any_object_has_given_tags_on_squere(scene, self.position, ["pickable"])
+               and CommonRequirements.any_object_on_square_has_all_given_tags(scene, self.position, ["pickable"])
