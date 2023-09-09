@@ -1,10 +1,10 @@
-from dataclasses import dataclass, field
-from typing import Dict
+from dataclasses import dataclass
+from collections import defaultdict
 
 from lynx.common.actions.action import Action
 from lynx.common.actions.common_requirements import CommonRequirements
 from lynx.common.actions.create_object import CreateObject
-from lynx.common.actions.remove_object import RemoveObject
+from lynx.common.actions.update_points import UpdatePoints
 from lynx.common.object import Object
 from lynx.common.vector import Vector
 
@@ -23,7 +23,12 @@ class Drop(Action):
 
     def apply(self, scene: 'Scene') -> None:
         agent: Object = scene.get_object_by_id(self.object_id)
-        if self.target_position != self.drop_area_position:
+        if self.target_position == self.drop_area_position:
+            for object_name, count in agent.inventory.items():
+                scene.players_points[agent.owner][object_name] += count
+            updated_points_action = UpdatePoints(agent.owner, agent.inventory)
+            scene.add_to_pending_actions(updated_points_action.serialize())
+        else:
             for objects_to_drop in agent.inventory:
                 for object_to_drop in range(agent.inventory[objects_to_drop]):
                     object_created = Object(id=scene.generate_id(),
@@ -36,5 +41,6 @@ class Drop(Action):
 
     def satisfies_requirements(self, scene: 'Scene') -> bool:
         return CommonRequirements.is_in_range(scene, self.object_id, self.target_position, 1) \
-                and CommonRequirements.is_walkable(scene, self.target_position) \
+                and (CommonRequirements.is_walkable(scene, self.target_position)
+                     or self.drop_area_position == self.target_position) \
                 and CommonRequirements.has_something_in_inventory(scene, self.object_id)

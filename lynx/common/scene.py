@@ -11,6 +11,7 @@ import random
 @dataclass
 class Scene(Serializable):
     players: List[str] = field(default_factory=list)
+    players_points: Dict[str, Dict[str, int]] = field(default_factory=dict)
     entities: List[Entity] = field(default_factory=list)
     pending_actions: List[str] = field(default_factory=list)  # Transformations which occur, during other transformations (e.g. chop -> Create logs)
     _square_position_map: Dict[Vector, Square] = field(default_factory=dict)
@@ -71,6 +72,7 @@ class Scene(Serializable):
 
     def add_player(self, player: str) -> None:
         self.players.append(player)
+        self.players_points[player] = {"Wood": 0, "Stone": 0}
 
     def is_world_created(self) -> bool:
         return bool(self.entities)
