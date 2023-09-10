@@ -4,7 +4,7 @@ from collections import defaultdict
 from lynx.common.actions.action import Action
 from lynx.common.actions.common_requirements import CommonRequirements
 from lynx.common.actions.create_object import CreateObject
-from lynx.common.actions.update_points import UpdatePoints
+from lynx.common.actions.update_resources import UpdateResources
 from lynx.common.object import Object
 from lynx.common.vector import Vector
 
@@ -25,7 +25,7 @@ class Drop(Action):
         player_name = agent.owner
         if self.target_position == scene.get_drop_area_of_a_player(player_name):
             scene.update_resources_of_player(player_name, agent.inventory)
-            updated_points_action = UpdatePoints(player_name, agent.inventory)
+            updated_points_action = UpdateResources(player_name, agent.inventory)
             scene.add_to_pending_actions(updated_points_action.serialize())
         else:
             for objects_to_drop in agent.inventory:

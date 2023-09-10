@@ -33,7 +33,7 @@ class Entity(Serializable):
         from lynx.common.actions.print import Print
         from lynx.common.actions.take import Take
         from lynx.common.actions.drop import Drop
-        from lynx.common.actions.update_points import UpdatePoints
+        from lynx.common.actions.update_resources import UpdateResources
         from lynx.common.player import Player
 
         exported_entity = cls._Exported.deserialize(json_string)

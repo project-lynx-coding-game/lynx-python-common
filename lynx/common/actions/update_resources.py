@@ -6,7 +6,7 @@ from lynx.common.actions.action import Action
 
 
 @dataclass
-class UpdatePoints(Action):
+class UpdateResources(Action):
     """
     Simple action for updating points on fronted.
     """

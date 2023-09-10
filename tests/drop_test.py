@@ -7,7 +7,7 @@ from lynx.common.object import Object
 from lynx.common.player import Player
 from lynx.common.scene import Scene
 from lynx.common.vector import Vector
-from lynx.common.actions.update_points import UpdatePoints
+from lynx.common.actions.update_resources import UpdateResources
 
 class TestDropSerialization:
     expected_serialization_drop = '{"type": "Drop", "attributes": {"object_id": 1, "target_position": {"x": 1, "y": 0}}}'
@@ -84,7 +84,7 @@ class TestDropApply:
         expected_scene = Scene(players=[Player(player_id="test", player_resources={"Wood": 2, "Stone": 1}, drop_area=Vector(5, 6))])
         expected_dummy_object = Object(id=1, name="dummy", owner="test", position=Vector(5, 5))
         expected_dummy_drop = Drop(target_position=Vector(5, 6), object_id=1)
-        expected_update_points = UpdatePoints(user_name="test", points_updated = {"Wood": 2, "Stone": 1})
+        expected_update_points = UpdateResources(user_name="test", points_updated = {"Wood": 2, "Stone": 1})
         expected_scene.add_entity(expected_dummy_object)
         expected_scene.add_entity(expected_dummy_drop)
         expected_scene.pending_actions.append(expected_update_points.serialize())
