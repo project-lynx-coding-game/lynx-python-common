@@ -72,8 +72,4 @@ class CommonRequirements:
 
     def has_something_in_inventory(scene: 'Scene', object_id: int) -> bool:
         object: Object = scene.get_object_by_id(object_id)
-
-        if object.inventory == {}:
-            return False
-
-        return True
+        return(bool(object.inventory))
