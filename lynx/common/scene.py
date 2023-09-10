@@ -5,13 +5,13 @@ from lynx.common.object import *
 from lynx.common.serializable import Serializable
 from lynx.common.vector import Vector
 from lynx.common.actions.create_object import CreateObject
+from lynx.common.player import Player
 import random
 
 
 @dataclass
 class Scene(Serializable):
-    players: List[str] = field(default_factory=list)
-    players_points: Dict[str, Dict[str, int]] = field(default_factory=dict)
+    players: List[Player] = field(default_factory=list)
     entities: List[Entity] = field(default_factory=list)
     pending_actions: List[str] = field(default_factory=list)  # Transformations which occur, during other transformations (e.g. chop -> Create logs)
     _square_position_map: Dict[Vector, Square] = field(default_factory=dict)
@@ -67,12 +67,12 @@ class Scene(Serializable):
     def add_to_pending_actions(self, action: str) -> NoReturn:
         self.pending_actions.append(action)
 
-    def is_player_new(self, player: str) -> bool:
-        return player not in self.players
+    def is_player_new(self, player_id: str) -> bool:
+        players_id = [player.player_id for player in self.players]
+        return player_id not in players_id
 
     def add_player(self, player: str) -> None:
-        self.players.append(player)
-        self.players_points[player] = {"Wood": 0, "Stone": 0}
+        self.players.append(Player(player_id=player, player_resources={"Wood": 0, "Stone": 0}, drop_area=None))
 
     def is_world_created(self) -> bool:
         return bool(self.entities)
@@ -90,3 +90,22 @@ class Scene(Serializable):
         drop_area = Object(name="DropArea", id=self.generate_id(), position=position, owner=player)
         create_drop_area = CreateObject(drop_area.serialize())
         self.add_to_pending_actions(create_drop_area.serialize())
+        player_object = self.get_player(player)
+        player_object.drop_area = position
+
+    def get_player(self, player_id: str) -> Optional[Player]:
+        for player in self.players:
+            if player.player_id == player_id:
+                return player
+        return None
+
+    def get_drop_area_of_a_player(self, player_id: str) -> Optional[Vector]:
+        for player in self.players:
+            if player.player_id == player_id:
+                return player.drop_area
+        return None
+
+    def update_resources_of_player(self, player_id: str, inventory: Dict):
+        player = self.get_player(player_id)
+        for object_name, count in inventory.items():
+            player.player_resources[object_name] += count

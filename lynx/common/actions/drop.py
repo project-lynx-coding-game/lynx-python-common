@@ -19,14 +19,13 @@ class Drop(Action):
     """
     object_id: int = -1
     target_position: Vector = Vector(0, 1)
-    drop_area_position: Vector = Vector(0, 0)
 
     def apply(self, scene: 'Scene') -> None:
         agent: Object = scene.get_object_by_id(self.object_id)
-        if self.target_position == self.drop_area_position:
-            for object_name, count in agent.inventory.items():
-                scene.players_points[agent.owner][object_name] += count
-            updated_points_action = UpdatePoints(agent.owner, agent.inventory)
+        player_name = agent.owner
+        if self.target_position == scene.get_drop_area_of_a_player(player_name):
+            scene.update_resources_of_player(player_name, agent.inventory)
+            updated_points_action = UpdatePoints(player_name, agent.inventory)
             scene.add_to_pending_actions(updated_points_action.serialize())
         else:
             for objects_to_drop in agent.inventory:
@@ -37,10 +36,13 @@ class Drop(Action):
                                             position=self.target_position)
                     create_action = CreateObject(object_created.serialize())
                     scene.add_to_pending_actions(create_action.serialize())
+
         agent.inventory = {}
 
     def satisfies_requirements(self, scene: 'Scene') -> bool:
+        agent: Object = scene.get_object_by_id(self.object_id)
+
         return CommonRequirements.is_in_range(scene, self.object_id, self.target_position, 1) \
                 and (CommonRequirements.is_walkable(scene, self.target_position)
-                     or self.drop_area_position == self.target_position) \
+                     or scene.get_drop_area_of_a_player(agent.owner) == self.target_position) \
                 and CommonRequirements.has_something_in_inventory(scene, self.object_id)

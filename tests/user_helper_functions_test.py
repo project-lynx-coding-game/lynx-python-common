@@ -50,9 +50,10 @@ class TestUserHelperFunctions:
         assert filter_objects(self.scene, [1, 2, 3, 4], "empty") != [1]
 
     def test_random_direction_success(self) -> NoReturn:
+        random.seed(12)
         self.scene.add_entity(Object(id=10, name="Grass", position=Vector(-1, 0), tags=["walkable"]))
         self.scene.add_entity(Object(id=11, name="Grass", position=Vector(0, 1), tags=["walkable"]))
-        assert random_direction(self.scene, 1) == Vector(0, 1)
+        assert random_direction(self.scene, 1) == Vector(-1, 0)
 
     def test_random_direction_failure(self) -> NoReturn:
         assert random_direction(self.scene, 1) != Vector(1, 0)
