@@ -8,7 +8,7 @@ from lynx.common.actions.action import Action
 @dataclass
 class UpdateResources(Action):
     """
-    Simple action for updating points on fronted.
+    Simple action for indicating that we should update resource view in the front-end.
     """
     user_name: str = ""
     points_updated: Dict[str, int] = field(default_factory=dict)
