@@ -17,7 +17,6 @@ class TestUserHelperFunctions:
     scene.add_entity(dummy_object2)
     dummy_object3 = Object(id=4, name="diff_dummy", position=Vector(1, 1))
     scene.add_entity(dummy_object3)
-    random.seed(12)
 
     def test_objects_around_success(self) -> NoReturn:
         assert get_objects_around(1, self.scene, 9) == [3, 4]

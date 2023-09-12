@@ -12,19 +12,20 @@ from lynx.common.actions.update_resources import UpdateResources
 class TestDropSerialization:
     expected_serialization_drop = '{"type": "Drop", "attributes": {"object_id": 1, "target_position": {"x": 1, "y": 0}}}'
 
-    def test_success_serialization(self) -> NoReturn:
+    def test_success_serialization(self) -> None:
         serialized_drop = Drop(object_id=1, target_position=Vector(1, 0)).serialize()
 
         assert self.expected_serialization_drop == serialized_drop
 
-    def test_success_deserialization(self):
+    def test_success_deserialization(self) -> None:
         expected_drop = Drop(object_id=1, target_position=Vector(1, 0))
         dummy_drop = Drop.deserialize(self.expected_serialization_drop)
 
         assert dummy_drop == expected_drop
 
+
 class TestDropApply:
-    def test_success_apply(self):
+    def test_drop_single_object_in_overworld_on_tile_sucessful(self) -> None:
         random.seed(1222)
         expected_scene = Scene(players=[Player(player_id="dummy", player_resources={"Wood": 0, "Stone": 0}, drop_area=Vector(5, 5))])
         expected_dummy_object = Object(id=1, name="dummy", owner="dummy", position=Vector(5, 5))
@@ -49,7 +50,7 @@ class TestDropApply:
 
         assert scene == expected_scene
 
-    def test_success_multiple_objects_apply(self):
+    def test_drop_multiple_objects_in_overworld_on_tile_sucessful(self) -> None:
         random.seed(1222)
         expected_scene = Scene(players=[Player(player_id="dummy", player_resources={"Wood": 0, "Stone": 0}, drop_area=Vector(5, 5))])
         expected_dummy_object = Object(id=1, name="dummy", owner="dummy", position=Vector(5, 5))
@@ -80,7 +81,7 @@ class TestDropApply:
 
         assert scene == expected_scene
 
-    def test_success_drop_to_drop_area_apply(self):
+    def test_success_drop_to_drop_area_apply(self) -> None:
         expected_scene = Scene(players=[Player(player_id="test", player_resources={"Wood": 2, "Stone": 1}, drop_area=Vector(5, 6))])
         expected_dummy_object = Object(id=1, name="dummy", owner="test", position=Vector(5, 5))
         expected_dummy_drop = Drop(target_position=Vector(5, 6), object_id=1)
@@ -98,9 +99,11 @@ class TestDropApply:
         dummy_drop.apply(scene)
 
         assert scene == expected_scene
+
+
 class TestDropRequirements:
 
-    def test_success_requirements(self):
+    def test_all_requirements_satisified_positive(self) -> None:
         scene = Scene(players=[Player(player_id="dummy", player_resources={"Wood": 0, "Stone": 0}, drop_area=Vector(5, 5))])
         dummy_object = Object(id=1, name="dummy", owner="dummy", position=Vector(5, 5), inventory={"Wood": 1})
         dummy_drop = Drop(target_position=Vector(5, 6), object_id=1)
@@ -108,15 +111,15 @@ class TestDropRequirements:
         scene.add_entity(dummy_object)
         assert dummy_drop.satisfies_requirements(scene) is True
 
-    def test_fail_requirements_distance(self):
+    def test_requirements_agent_too_far_fail(self) -> None:
         scene = Scene(players=[Player(player_id="dummy", player_resources={"Wood": 0, "Stone": 0}, drop_area=Vector(5, 5))])
         dummy_object = Object(id=1, name="dummy", owner="dummy", position=Vector(5, 5), inventory={"Wood": 1})
         dummy_drop = Drop(target_position=Vector(6, 6), object_id=1)
-        scene.add_entity(Object(id=3, name="Grass", position=Vector(5, 6), tags=['walkable']))
+        scene.add_entity(Object(id=3, name="Grass", position=Vector(6, 6), tags=['walkable']))
         scene.add_entity(dummy_object)
         assert dummy_drop.satisfies_requirements(scene) is not True
 
-    def test_fail_requirements_inventory(self):
+    def test_requirements_empty_inventory_fail(self) -> None:
         scene = Scene(players=[Player(player_id="dummy", player_resources={"Wood": 0, "Stone": 0}, drop_area=Vector(5, 5))])
         dummy_object = Object(id=1, name="dummy", owner="dummy", position=Vector(5, 5))
         dummy_drop = Drop(target_position=Vector(5, 6), object_id=1)
@@ -124,7 +127,7 @@ class TestDropRequirements:
         scene.add_entity(dummy_object)
         assert dummy_drop.satisfies_requirements(scene) is not True
 
-    def test_fail_requirements_walkable(self):
+    def test_requirements_no_walkable_tile_fail(self) -> None:
         scene = Scene(players=[Player(player_id="dummy", player_resources={"Wood": 0, "Stone": 0}, drop_area=Vector(5, 5))])
         dummy_object = Object(id=1, name="dummy", owner="dummy", position=Vector(5, 5), inventory={"Wood": 1})
         dummy_drop = Drop(target_position=Vector(5, 6), object_id=1)
