@@ -17,7 +17,6 @@ class TestUserHelperFunctions:
     scene.add_entity(dummy_object2)
     dummy_object3 = Object(id=4, name="diff_dummy", position=Vector(1, 1))
     scene.add_entity(dummy_object3)
-    random.seed(12)
 
     def test_objects_around_success(self) -> NoReturn:
         assert get_objects_around(1, self.scene, 9) == [3, 4]
@@ -50,6 +49,7 @@ class TestUserHelperFunctions:
         assert filter_objects(self.scene, [1, 2, 3, 4], "empty") != [1]
 
     def test_random_direction_success(self) -> NoReturn:
+        random.seed(12)
         self.scene.add_entity(Object(id=10, name="Grass", position=Vector(-1, 0), tags=["walkable"]))
         self.scene.add_entity(Object(id=11, name="Grass", position=Vector(0, 1), tags=["walkable"]))
         assert random_direction(self.scene, 1) == Vector(-1, 0)
