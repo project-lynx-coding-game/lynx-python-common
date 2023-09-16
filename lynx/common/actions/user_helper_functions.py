@@ -41,17 +41,17 @@ def get_position(scene: 'Scene', object_id: int) -> Vector:
 
 
 def can_i_stand(scene: 'Scene', position: Vector) -> bool:
-    """Returns True if the position is walkable.
+    """Returns True if the position is a tile.
 
     Args:
         scene: The scene.
         position: The position.
 
     Returns:
-        True if the position is walkable.
+        True if the position is a tile.
 
     """
-    return Req.is_walkable(scene, position)
+    return Req.is_tile(scene, position)
 
 
 def get_type(scene: 'Scene', object_id: int) -> str:
@@ -113,6 +113,6 @@ def random_direction(scene: 'Scene', object_id: int) -> Vector:
     positions: List[Vector] = [Vector(0, 1), Vector(1, 0), Vector(-1, 0), Vector(0, -1)]
     object_position: Vector = scene.get_object_by_id(object_id).position
     available_positions = list(
-        filter(lambda position: Req.is_walkable(scene, object_position + position), positions)
+        filter(lambda position: Req.is_tile(scene, object_position + position), positions)
     )
     return random.choice(available_positions)

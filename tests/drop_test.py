@@ -107,7 +107,7 @@ class TestDropRequirements:
         scene = Scene(players=[Player(player_id="dummy", player_resources={"Wood": 0, "Stone": 0}, drop_area=Vector(5, 5))])
         dummy_object = Object(id=1, name="dummy", owner="dummy", position=Vector(5, 5), inventory={"Wood": 1})
         dummy_drop = Drop(target_position=Vector(5, 6), object_id=1)
-        scene.add_entity(Object(id=3, name="Grass", position=Vector(5, 6), tags=['walkable']))
+        scene.add_entity(Object(id=3, name="Grass", position=Vector(5, 6), tags=['tile']))
         scene.add_entity(dummy_object)
         assert dummy_drop.satisfies_requirements(scene) is True
 
@@ -115,7 +115,7 @@ class TestDropRequirements:
         scene = Scene(players=[Player(player_id="dummy", player_resources={"Wood": 0, "Stone": 0}, drop_area=Vector(5, 5))])
         dummy_object = Object(id=1, name="dummy", owner="dummy", position=Vector(5, 5), inventory={"Wood": 1})
         dummy_drop = Drop(target_position=Vector(6, 6), object_id=1)
-        scene.add_entity(Object(id=3, name="Grass", position=Vector(6, 6), tags=['walkable']))
+        scene.add_entity(Object(id=3, name="Grass", position=Vector(6, 6), tags=['tile']))
         scene.add_entity(dummy_object)
         assert dummy_drop.satisfies_requirements(scene) is not True
 
@@ -123,11 +123,11 @@ class TestDropRequirements:
         scene = Scene(players=[Player(player_id="dummy", player_resources={"Wood": 0, "Stone": 0}, drop_area=Vector(5, 5))])
         dummy_object = Object(id=1, name="dummy", owner="dummy", position=Vector(5, 5))
         dummy_drop = Drop(target_position=Vector(5, 6), object_id=1)
-        scene.add_entity(Object(id=3, name="Grass", position=Vector(5, 6), tags=['walkable']))
+        scene.add_entity(Object(id=3, name="Grass", position=Vector(5, 6), tags=['tile']))
         scene.add_entity(dummy_object)
         assert dummy_drop.satisfies_requirements(scene) is not True
 
-    def test_requirements_no_walkable_tile_fail(self) -> None:
+    def test_requirements_no_tile_fail(self) -> None:
         scene = Scene(players=[Player(player_id="dummy", player_resources={"Wood": 0, "Stone": 0}, drop_area=Vector(5, 5))])
         dummy_object = Object(id=1, name="dummy", owner="dummy", position=Vector(5, 5), inventory={"Wood": 1})
         dummy_drop = Drop(target_position=Vector(5, 6), object_id=1)

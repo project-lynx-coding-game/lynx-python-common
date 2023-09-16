@@ -77,16 +77,16 @@ class Scene(Serializable):
     def is_world_created(self) -> bool:
         return bool(self.entities)
 
-    def get_walkable_positions(self) -> List[Vector]:
-        walkable_positions = []
+    def get_tile_positions(self) -> List[Vector]:
+        tile_positions = []
         for position in self._square_position_map.keys():
-            if self._square_position_map[position].walkable():
-                walkable_positions.append(position)
-        return walkable_positions
+            if self._square_position_map[position].tile():
+                tile_positions.append(position)
+        return tile_positions
 
     def generate_drop_area(self, player: str) -> None:
-        walkable_positions = self.get_walkable_positions()
-        position = random.choice(walkable_positions)
+        tile_positions = self.get_tile_positions()
+        position = random.choice(tile_positions)
         drop_area = Object(name="DropArea", id=self.generate_id(), position=position, owner=player)
         create_drop_area = CreateObject(drop_area.serialize())
         self.add_to_pending_actions(create_drop_area.serialize())

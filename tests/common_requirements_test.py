@@ -9,24 +9,24 @@ from lynx.common.scene import Scene
 from lynx.common.enums import Direction
 
 
-class TestIsWalkable:
+class TestIsTile:
     @patch('lynx.common.scene.Scene')
     def test_success(self, mock_scene) -> NoReturn:
         mock_square_at_destination = Square()
-        mock_square_at_destination.walkable = MagicMock(return_value=True)
+        mock_square_at_destination.tile = MagicMock(return_value=True)
         mock_scene.get_square.return_value = mock_square_at_destination
 
-        result: bool = CommonRequirements.is_walkable(mock_scene, Vector(1, 0))
+        result: bool = CommonRequirements.is_tile(mock_scene, Vector(1, 0))
 
         assert result
 
     @patch('lynx.common.scene.Scene')
     def test_failure(self, mock_scene) -> NoReturn:
         mock_square_at_destination = Square()
-        mock_square_at_destination.walkable = MagicMock(return_value=False)
+        mock_square_at_destination.tile = MagicMock(return_value=False)
         mock_scene.get_square.return_value = mock_square_at_destination
 
-        result: bool = CommonRequirements.is_walkable(mock_scene, Vector(1, 0))
+        result: bool = CommonRequirements.is_tile(mock_scene, Vector(1, 0))
 
         assert not result
 
@@ -59,20 +59,20 @@ class TestIsProperDirection:
 
 class TestContainTags:
     scene = Scene()
-    dummy_object1 = Object(id=123, name="dummy", position=Vector(0, 0), tags=['walkable', 'pushable'])
+    dummy_object1 = Object(id=123, name="dummy", position=Vector(0, 0), tags=['tile', 'pushable'])
     scene.add_entity(dummy_object1)
 
     def test_has_proper_tag_positive(self) -> NoReturn:
-        assert CommonRequirements.has_given_tags(self.scene, 123, ['walkable'])
+        assert CommonRequirements.has_given_tags(self.scene, 123, ['tile'])
 
     def test_has_improper_tag_negative(self) -> NoReturn:
         assert not CommonRequirements.has_given_tags(self.scene, 123, ['insertable'])
 
     def test_has_proper_tags_positive(self) -> NoReturn:
-        assert CommonRequirements.has_given_tags(self.scene, 123, ['walkable', 'pushable'])
+        assert CommonRequirements.has_given_tags(self.scene, 123, ['tile', 'pushable'])
 
     def test_has_improper_tags_negative(self) -> NoReturn:
-        assert not CommonRequirements.has_given_tags(self.scene, 123, ['walkable', 'pushable', 'insertable'])
+        assert not CommonRequirements.has_given_tags(self.scene, 123, ['tile', 'pushable', 'insertable'])
 
 class TestIsAnyOnSquare:
     scene = Scene()
@@ -90,8 +90,8 @@ class TestIsAnyOnSquare:
 
 class TestIsAnyObjectOnSquareHasAllGivenTags:
     scene = Scene()
-    dummy_object1 = Object(id=123, name="dummy", position=Vector(0, 0), tags=['walkable', 'pushable'])
-    dummy_object2 = Object(id=1233, name="dummy", position=Vector(0, 1), tags=['walkable'])
+    dummy_object1 = Object(id=123, name="dummy", position=Vector(0, 0), tags=['tile', 'pushable'])
+    dummy_object2 = Object(id=1233, name="dummy", position=Vector(0, 1), tags=['tile'])
     scene.add_entity(dummy_object1)
     scene.add_entity(dummy_object2)
 

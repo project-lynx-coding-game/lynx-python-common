@@ -23,7 +23,7 @@ class Push(Action):
         objects_on_square = scene.get_objects_by_position(pushed_position)
 
         for pushable_object in list(filter(lambda x: 'pushable' in x.tags, objects_on_square)):
-            if Req.is_walkable(scene, destination_position) or Req.can_be_stacked(scene, destination_position, pushable_object.name):
+            if Req.is_tile(scene, destination_position) or Req.can_be_stacked(scene, destination_position, pushable_object.name):
                 self.pushed_object_ids.append(pushable_object.id)
 
         return Req.is_in_range(scene, self.object_id, pushed_position, 1) and Req.is_proper_direction(self.direction) and self.pushed_object_ids

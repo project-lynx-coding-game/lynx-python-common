@@ -49,6 +49,6 @@ class Drop(Action):
         agent: Object = scene.get_object_by_id(self.object_id)
 
         return CommonRequirements.is_in_range(scene, self.object_id, self.target_position, 1) \
-                and (CommonRequirements.is_walkable(scene, self.target_position)
+                and (CommonRequirements.is_tile(scene, self.target_position)
                      or scene.get_drop_area_of_a_player(agent.owner) == self.target_position) \
                 and CommonRequirements.has_something_in_inventory(scene, self.object_id)

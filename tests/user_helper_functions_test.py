@@ -11,7 +11,7 @@ class TestUserHelperFunctions:
     scene = Scene()
     dummy_agent = Object(id=1, name="agent", position=Vector(0, 0))
     scene.add_entity(dummy_agent)
-    dummy_object1 = Object(id=2, name="dummy", position=Vector(5, 5), tags=["walkable"])
+    dummy_object1 = Object(id=2, name="dummy", position=Vector(5, 5), tags=["tile"])
     scene.add_entity(dummy_object1)
     dummy_object2 = Object(id=3, name="dummy", position=Vector(3, 5))
     scene.add_entity(dummy_object2)
@@ -50,8 +50,8 @@ class TestUserHelperFunctions:
 
     def test_random_direction_success(self) -> NoReturn:
         random.seed(12)
-        self.scene.add_entity(Object(id=10, name="Grass", position=Vector(-1, 0), tags=["walkable"]))
-        self.scene.add_entity(Object(id=11, name="Grass", position=Vector(0, 1), tags=["walkable"]))
+        self.scene.add_entity(Object(id=10, name="Grass", position=Vector(-1, 0), tags=["tile"]))
+        self.scene.add_entity(Object(id=11, name="Grass", position=Vector(0, 1), tags=["tile"]))
         assert random_direction(self.scene, 1) == Vector(-1, 0)
 
     def test_random_direction_failure(self) -> NoReturn:

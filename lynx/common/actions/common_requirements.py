@@ -9,9 +9,9 @@ from lynx.common.scene import Scene
 class CommonRequirements:
 
     @staticmethod
-    def is_walkable(scene: 'Scene', position: Vector) -> bool:
+    def is_tile(scene: 'Scene', position: Vector) -> bool:
         square_at_destination: Square = scene.get_square(position)
-        return square_at_destination.walkable()
+        return square_at_destination.tile()
 
     @staticmethod
     def is_on_square(scene: 'Scene', position: Vector, name: str) -> bool:
