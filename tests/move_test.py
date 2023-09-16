@@ -48,9 +48,9 @@ class TestMoveRequirements:
             object_id=123,
             direction=Vector(1, 0)
         )
-        walkable_square = Square()
-        walkable_square.walkable = MagicMock(return_value=True)
-        mock_scene.get_square.return_value = walkable_square
+        tile_square = Square()
+        tile_square.tile = MagicMock(return_value=True)
+        mock_scene.get_square.return_value = tile_square
 
         result: bool = dummy_action.satisfies_requirements(mock_scene)
 

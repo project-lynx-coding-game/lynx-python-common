@@ -1,38 +1,37 @@
 from dataclasses import dataclass, field
-from typing import List, NoReturn
+from typing import List, Optional
 
 from lynx.common.object import Object
 
 
-# Class wraping logic of ground and objects placed on it
+# class wrapping logic of a tile and objects placed on it
 @dataclass
 class Square:
-    ground: Object = None
+    tile_object: Optional[Object] = None
     objects: List[Object] = field(default_factory=list)
 
-    def append(self, object: Object) -> NoReturn:
-        # We might rename the walkable property into sth like ground
-        if object.has_tags(['walkable']) and self.ground != None:
-            # In the future when we add logger we should log this event!
-            raise Exception("Cannot put more than a one ground in a square!")
+    def append(self, object: Object) -> None:
+        if object.has_tags(['tile']) and self.tile_object is not None:
+            # TODO: in the future when we add logger we should log this event
+            raise Exception("Cannot put more than one tile in a square!")
 
-        if object.has_tags(['walkable']):
-            self.ground = object
+        if object.has_tags(['tile']):
+            self.tile_object = object
 
         self.objects.append(object)
 
-    def remove(self, object: Object) -> NoReturn:
-        if self.ground == object:
-            self.ground = None
+    def remove(self, object: Object) -> None:
+        if self.tile_object == object:
+            self.tile_object = None
 
         self.objects.remove(object)
 
-    def walkable(self) -> bool:
-        objects_tags = [object_on_ground.tags for object_on_ground in self.objects]
-        contains_walkable = True
+    def tile(self) -> bool:
+        objects_tags = [object_on_tile.tags for object_on_tile in self.objects]
+        contains_tile = True
 
         for object_tags in objects_tags:
-            if 'walkable' not in object_tags:
-                contains_walkable = False
+            if 'tile' not in object_tags:
+                contains_tile = False
 
-        return self.ground is not None and contains_walkable
+        return self.tile_object is not None and contains_tile

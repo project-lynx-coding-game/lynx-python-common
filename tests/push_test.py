@@ -44,20 +44,20 @@ class TestPushDeserialization:
 
 
 class TestPushSatisfiesRequirements:
-    def test_square_walkable_satisfies(self) -> NoReturn:
+    def test_square_tile_satisfies(self) -> NoReturn:
         scene = Scene()
         pushable_object = Object(id=123, name="dummy", position=Vector(1, 1), tags=['pushable'])
         pusher_object = Object(id=456, name="dummy", position=Vector(2, 1))
-        walkable_object = Object(id=789, name="dummy123", position=Vector(0, 1), tags=['walkable'])
+        tile_object = Object(id=789, name="dummy123", position=Vector(0, 1), tags=['tile'])
         dummy_action = Push(object_id=456, direction=Vector(-1, 0))
         scene.add_entity(pushable_object)
         scene.add_entity(pusher_object)
-        scene.add_entity(walkable_object)
+        scene.add_entity(tile_object)
         scene.add_entity(dummy_action)
 
         assert dummy_action.satisfies_requirements(scene)
 
-    def test_square_not_walkable_taken_by_same_object_satisfies(self) -> NoReturn:
+    def test_square_not_tile_taken_by_same_object_satisfies(self) -> NoReturn:
         scene = Scene()
         pushable_object = Object(id=123, name="dummy", position=Vector(1, 1), tags=['pushable'])
         pusher_object = Object(id=456, name="dummy", position=Vector(2, 1))
@@ -70,7 +70,7 @@ class TestPushSatisfiesRequirements:
 
         assert dummy_action.satisfies_requirements(scene)
 
-    def test_square_not_walkable_taken_by_different_object_does_not_satisfy(self) -> NoReturn:
+    def test_square_not_tile_taken_by_different_object_does_not_satisfy(self) -> NoReturn:
         scene = Scene()
         pushable_object = Object(id=123, name="dummy", position=Vector(1, 1), tags=['pushable'])
         pusher_object = Object(id=456, name="dummy", position=Vector(2, 1))
