@@ -40,6 +40,20 @@ def get_position(scene: 'Scene', object_id: int) -> Vector:
     return scene.get_object_by_id(object_id).position
 
 
+def get_number_of_items_in_inventory(scene: 'Scene', object_id: int) -> int:
+    """Returns number of objects in inventory
+
+    Args:
+        scene: The scene.
+        object_id: The id of the object.
+
+    Returns:
+        The number of objects in inventory
+
+    """
+    return sum(scene.get_object_by_id(object_id).inventory.values())
+
+
 def can_i_stand(scene: 'Scene', position: Vector) -> bool:
     """Returns True if the position is a tile.
 
