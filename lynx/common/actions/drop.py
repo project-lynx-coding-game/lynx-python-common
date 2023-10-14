@@ -34,21 +34,22 @@ class Drop(Action):
                 create_action = CreateObject(object_created.serialize())
                 scene.add_to_pending_actions(create_action.serialize())
 
-
     def apply(self, scene: 'Scene') -> None:
         agent: Object = scene.get_object_by_id(self.object_id)
         player_name = agent.owner
+        player = scene.get_player(agent.owner)
         if self.target_position == scene.get_drop_area_of_a_player(player_name):
             self.drop_in_drop_area(scene, player_name, agent.inventory)
         else:
             self.drop_in_overworld(scene, agent.inventory)
 
         agent.inventory = {}
+        player.get_agent_by_id(agent.id).drop_inventory()
 
     def satisfies_requirements(self, scene: 'Scene') -> bool:
         agent: Object = scene.get_object_by_id(self.object_id)
 
         return CommonRequirements.is_in_range(scene, self.object_id, self.target_position, 1) \
-                and (CommonRequirements.is_tile(scene, self.target_position)
-                     or scene.get_drop_area_of_a_player(agent.owner) == self.target_position) \
-                and CommonRequirements.has_something_in_inventory(scene, self.object_id)
+            and (CommonRequirements.is_tile(scene, self.target_position)
+                 or scene.get_drop_area_of_a_player(agent.owner) == self.target_position) \
+            and CommonRequirements.has_something_in_inventory(scene, self.object_id)

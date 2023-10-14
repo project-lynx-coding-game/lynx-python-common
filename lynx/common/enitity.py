@@ -35,6 +35,7 @@ class Entity(Serializable):
         from lynx.common.actions.drop import Drop
         from lynx.common.actions.update_resources import UpdateResources
         from lynx.common.player import Player
+        from lynx.common.agent import Agent
 
         exported_entity = cls._Exported.deserialize(json_string)
         entity_type = locals()[exported_entity.type]
