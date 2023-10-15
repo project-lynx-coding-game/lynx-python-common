@@ -43,8 +43,20 @@ class Drop(Action):
         else:
             self.drop_in_overworld(scene, agent.inventory)
 
+        self.empty_inventory(scene, agent)
+
+    @staticmethod
+    def empty_inventory(scene: 'Scene', agent: Object) -> None:
         agent.inventory = {}
-        player.get_agent_by_id(agent.id).drop_inventory()
+        player = scene.get_player(agent.owner)
+        if player is None:
+            return
+
+        player_agent = player.get_agent_by_id(agent.id)
+        if player_agent is None:
+            return
+
+        player_agent.drop_inventory()
 
     def satisfies_requirements(self, scene: 'Scene') -> bool:
         agent: Object = scene.get_object_by_id(self.object_id)
