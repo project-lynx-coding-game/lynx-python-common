@@ -37,7 +37,6 @@ class Drop(Action):
     def apply(self, scene: 'Scene') -> None:
         agent: Object = scene.get_object_by_id(self.object_id)
         player_name = agent.owner
-        player = scene.get_player(agent.owner)
         if self.target_position == scene.get_drop_area_of_a_player(player_name):
             self.drop_in_drop_area(scene, player_name, agent.inventory)
         else:
