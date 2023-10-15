@@ -19,12 +19,13 @@ class Drop(Action):
     object_id: int = -1
     target_position: Vector = Vector(0, 1)
 
-    def drop_in_drop_area(self, scene: 'Scene', player_name: str, inventory: dict):
+    def drop_in_drop_area(self, scene: 'Scene', player_name: str, inventory: dict, agent: Object):
         scene.update_resources_of_player(player_name, inventory)
         update_resources_action = UpdateResources(player_name, inventory)
         scene.add_to_pending_actions(update_resources_action.serialize())
+        self.empty_inventory(scene, agent)
 
-    def drop_in_overworld(self, scene: 'Scene', inventory: dict):
+    def drop_in_overworld(self, scene: 'Scene', inventory: dict, agent: Object):
         for objects_to_drop in inventory:
             for object_to_drop in range(inventory[objects_to_drop]):
                 object_created = Object(id=scene.generate_id(),
@@ -34,16 +35,15 @@ class Drop(Action):
                 create_action = CreateObject(object_created.serialize())
                 scene.add_to_pending_actions(create_action.serialize())
 
+        self.empty_inventory(scene, agent)
+
     def apply(self, scene: 'Scene') -> None:
         agent: Object = scene.get_object_by_id(self.object_id)
         player_name = agent.owner
-        player = scene.get_player(agent.owner)
         if self.target_position == scene.get_drop_area_of_a_player(player_name):
-            self.drop_in_drop_area(scene, player_name, agent.inventory)
+            self.drop_in_drop_area(scene, player_name, agent.inventory, agent)
         else:
-            self.drop_in_overworld(scene, agent.inventory)
-
-        self.empty_inventory(scene, agent)
+            self.drop_in_overworld(scene, agent.inventory, agent)
 
     @staticmethod
     def empty_inventory(scene: 'Scene', agent: Object) -> None:

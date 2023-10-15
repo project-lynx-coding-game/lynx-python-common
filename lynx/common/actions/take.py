@@ -32,6 +32,7 @@ class Take(Action):
     @staticmethod
     def add_item_to_inventory(agent: Object, scene: 'Scene', object_to_pick: Object) -> None:
         agent.add_to_inventory(object_to_pick.name)
+        
         player = scene.get_player(agent.owner)
         if player is None:
             return
