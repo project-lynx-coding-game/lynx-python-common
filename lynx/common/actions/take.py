@@ -35,5 +35,5 @@ class Take(Action):
         player = scene.get_player(agent.owner)
         if player is None:
             return
-        
+
         player.get_agent_by_id(agent.id).add_to_inventory(object_to_pick.name)

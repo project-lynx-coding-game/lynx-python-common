@@ -56,7 +56,7 @@ class Drop(Action):
         if player_agent is None:
             return
 
-        player_agent.drop_inventory()
+        player_agent.clear_inventory()
 
     def satisfies_requirements(self, scene: 'Scene') -> bool:
         agent: Object = scene.get_object_by_id(self.object_id)

@@ -1,6 +1,7 @@
 from dataclasses import dataclass, field
 from datetime import datetime
 
+import typing as tp
 from lynx.common.serializable import Serializable
 
 
@@ -8,11 +9,11 @@ from lynx.common.serializable import Serializable
 class Agent(Serializable):
     id: int = -1
     type: str = ""
-    time_creation: str | None = None
-    time_death: str | None = None
+    time_creation: tp.Union[str, None] = None
+    time_death: tp.Union[str, None] = None
     is_alive: bool = True
     tick: str = ""
-    lifetime: float | None = None
+    lifetime: tp.Union[float, None] = None
     inventory: dict[str, int] = field(default_factory=dict)
     historical_inventory: dict[str, int] = field(default_factory=dict)
 
@@ -20,7 +21,7 @@ class Agent(Serializable):
         time = datetime.now() if self.time_death is None else datetime.fromisoformat(self.time_death)
         return (time - datetime.fromisoformat(self.time_creation)).total_seconds()
 
-    def drop_inventory(self):
+    def clear_inventory(self):
         self.inventory = {}
 
     def add_to_inventory(self, object_name: str):
