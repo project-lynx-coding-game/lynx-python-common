@@ -10,6 +10,7 @@ class Print(Action):
     """
     text: str = ""
     user_id: str = ""
+    object_id: int = -1
 
     def satisfies_requirements(self, scene: 'Scene') -> bool:
         return True
