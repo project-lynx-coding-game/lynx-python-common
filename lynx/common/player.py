@@ -1,5 +1,6 @@
 from datetime import datetime
 
+from lynx.common.actions.update_resources import UpdateResources
 from lynx.common.agent import Agent
 from lynx.common.object import *
 from lynx.common.serializable import Serializable
@@ -19,6 +20,10 @@ class Player(Serializable):
         "Stone": 6,
     }
 
+    @property
+    def price_multiplier(self) -> int:
+        return 2 ** (self.max_agents - 1)
+
     def alive_agents_count(self) -> int:
         return sum([1 for agent in self.agents.values() if agent.is_alive])
 
@@ -27,7 +32,7 @@ class Player(Serializable):
 
     def can_purchase_slot(self) -> bool:
         for resource, base_cost in self.BASE_COSTS.items():
-            current_cost = base_cost * (2 ** self.max_agents)
+            current_cost = base_cost * self.price_multiplier
             if self.player_resources.get(resource, 0) < current_cost:
                 return False
 
@@ -36,15 +41,21 @@ class Player(Serializable):
     def calculate_slot_cost(self) -> Dict[str, int]:
         cost = {}
         for resource, base_cost in self.BASE_COSTS.items():
-            current_cost = base_cost * (2 ** (self.max_agents - 1))
+            current_cost = base_cost * self.price_multiplier
             cost[resource] = current_cost
 
         return cost
 
-    def purchase_slot(self) -> None:
+    def purchase_slot(self, scene: 'Scene') -> None:
+        resources_to_deduct = {}
         for resource, base_cost in self.BASE_COSTS.items():
-            current_cost = base_cost * (2 ** (self.max_agents - 1))
+            current_cost = base_cost * self.price_multiplier
+            resources_to_deduct[resource] = -current_cost
             self.player_resources[resource] -= current_cost
+
+        self.max_agents += 1
+        update_resources_action = UpdateResources(self.player_id, resources_to_deduct)
+        scene.add_to_pending_actions(update_resources_action.serialize())
 
     def create_and_add_agent_from_object(self, object: Object) -> Agent:
         agent = Agent(
@@ -59,11 +70,6 @@ class Player(Serializable):
 
     def add_agent_from_object(self, object: Object) -> bool:
         if self.has_available_slot():
-            self.create_and_add_agent_from_object(object)
-            return True
-
-        if self.can_purchase_slot():
-            self.purchase_slot()
             self.create_and_add_agent_from_object(object)
             return True
 
